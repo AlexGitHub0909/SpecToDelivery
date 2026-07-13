@@ -30,7 +30,7 @@ Do not add an `AGENTS.md` to every folder. A rule file should resolve a real dif
 The root file should cover:
 
 - product purpose and current stage;
-- hard business and capability boundaries;
+- hard domain and capability boundaries;
 - current technology facts;
 - fact sources and document routing;
 - minimal implementation and reuse rules;

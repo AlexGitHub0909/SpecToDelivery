@@ -8,11 +8,11 @@
 
 ## Product purpose
 
-Describe the user, problem, and desired outcome without implementation detail.
+Describe the actor or system, the problem, and the desired outcome without implementation detail.
 
-## Users and roles
+## Actors and roles
 
-| Role | Need | Allowed actions | Restricted information |
+| Actor or role | Need | Allowed actions | Restricted information |
 |---|---|---|---|
 
 ## Scope
@@ -28,7 +28,7 @@ Describe the user, problem, and desired outcome without implementation detail.
 | Requirement ID | Capability | Observable behavior | Status | Evidence or gap |
 |---|---|---|---|---|
 
-## Business rules
+## Domain rules
 
 Document rules, calculations, state invariants, time windows, ownership, and visibility in testable language.
 

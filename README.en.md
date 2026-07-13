@@ -1,14 +1,14 @@
-# Build Project Zero to One
+# From product definition to verified delivery
 
 [简体中文](README.md)
 
-This Codex skill turns a product brief or an existing repository into a project that can be planned, implemented, checked, and handed over without relying on chat history.
+This Codex skill keeps product intent, implementation state, and verification evidence in the repository. It can establish a new project or audit and continue an existing codebase.
 
-It is opinionated about project control: every managed project needs a current `PLAN.md`, a root `AGENTS.md`, and scoped `AGENTS.md` files where local engineering rules differ. It also keeps product intent separate from implementation evidence, so a written requirement never passes as finished code.
+Every managed project needs a current `PLAN.md` and a root `AGENTS.md`. Add scoped `AGENTS.md` files where local engineering rules differ. Keep approved intent separate from implementation evidence so a written requirement does not pass as finished code.
 
 ## Installation
 
-You need Git and a Codex App, CLI, or IDE Extension version that supports Skills. Under the current [Codex directory convention](https://developers.openai.com/codex/concepts/customization), personal skills go in `$HOME/.agents/skills`, while project-shared skills go in `.agents/skills` inside the repository.
+You need Git and a Codex App, CLI, or IDE Extension version that supports Skills. The current [public Codex documentation](https://developers.openai.com/codex/concepts/customization) places personal skills in `$HOME/.agents/skills` and project-shared skills in `.agents/skills` inside the repository. The commands below follow that convention.
 
 ### Personal installation
 
@@ -49,14 +49,14 @@ To use the skill only in one repository, place it under that project's `.agents/
 
 ```bash
 git submodule add https://github.com/AlexGitHub0909/build-project-zero-to-one.git .agents/skills/build-project-zero-to-one
-git commit -m "chore: add project zero-to-one skill"
+git commit -m "chore: add project delivery skill"
 ```
 
 After cloning the project on another machine, run `git submodule update --init --recursive`. To move to a newer upstream version, run `git submodule update --remote .agents/skills/build-project-zero-to-one`, review the result, and commit the updated submodule pointer.
 
 If the project does not use submodules, copy the skill into the same directory and commit it with the project, without retaining a nested `.git` directory.
 
-Some older Codex versions use `~/.codex/skills`. If an existing installation is already detected, do not install a duplicate. For new installations, use `$HOME/.agents/skills` for personal use or `.agents/skills` inside a project. Codex normally detects skill changes automatically; restart Codex if the skill does not appear.
+Some installed versions and built-in tools still use `$CODEX_HOME/skills`, usually `~/.codex/skills` when `CODEX_HOME` is unset. If Codex already detects an existing installation, do not install a duplicate. Codex normally detects skill changes automatically; restart Codex if the skill does not appear.
 
 The repository is self-contained. It does not require an MCP server or a separate plugin.
 
@@ -68,7 +68,7 @@ Use `$build-project-zero-to-one` when you want Codex to:
 - recover the state of an existing repository and continue the work;
 - produce an implementation-ready spec and handoff without writing application code;
 - add or repair project planning, document routing, traceability, test evidence, and release rules;
-- implement the next vertical slice and update the repository facts as it goes.
+- implement the next verifiable slice and update the repository facts as it goes.
 
 The skill supports three modes:
 
@@ -78,7 +78,7 @@ The skill supports three modes:
 | `BROWNFIELD` | An existing repository that must be audited before changes |
 | `SPEC_ONLY` | A specification and handoff package with no application-code changes |
 
-## What it puts in a project
+## Project governance
 
 The supplied templates cover:
 
@@ -86,7 +86,7 @@ The supplied templates cover:
 - root and scoped agent rules;
 - current planning and change history;
 - document routing and ownership;
-- product scope and business flows;
+- product scope, behavior, and system flows;
 - requirement-to-code traceability;
 - test and release evidence;
 - architecture decisions and rollback.
@@ -98,7 +98,7 @@ The default initializer creates the full governance baseline. Use it for a new p
 Invoke the skill with the product material or repository in scope:
 
 ```text
-Use $build-project-zero-to-one to audit this repository, recover the current plan, and implement the next verified product slice.
+Use $build-project-zero-to-one to audit this repository, recover the current plan, and implement the next piece of work with current verification evidence.
 ```
 
 For a new project:

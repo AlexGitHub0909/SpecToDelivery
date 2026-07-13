@@ -1,16 +1,16 @@
 ---
 name: build-project-zero-to-one
-description: Turn a product brief, PRD, requirements document, or partial software repository into a planned, traceable, verified project. Use when Codex must start a project from zero, recover and continue an existing project, produce a spec-only handoff, establish PLAN.md and root/scoped AGENTS.md rules, implement vertical business slices, reconcile code with product intent, or prepare evidence-backed release and rollback work.
+description: Turn a product brief, PRD, requirements document, or partial software repository into a planned, traceable project with current verification evidence. Use when Codex must establish a new software project, recover and continue an existing repository, produce a spec-only handoff, establish PLAN.md and root/scoped AGENTS.md rules, implement end-to-end slices, reconcile code with approved intent, or prepare evidence-backed release and rollback work.
 ---
 
-# Build a project from zero to one
+# Move from product definition to verifiable delivery
 
-Use this skill to manage the full path from product intent to a working project. Keep the method consistent, but fit the files, stack, and checks to the repository in front of you.
+Use this skill to keep approved intent, implementation evidence, and handoff state consistent inside the repository. Fit the files, stack, and checks to the project in front of you.
 
 ## Non-negotiable rules
 
-- Treat `PLAN.md` as the local execution control plane. Read it before work and update it when the current task, actual result, evidence, blocker, or next step changes.
-- Require a root `AGENTS.md`. Add scoped `AGENTS.md` files wherever a directory has its own stack, product surface, security boundary, data boundary, validation commands, or release process.
+- Treat `PLAN.md` as the current execution record. Read it before work and update it when the current task, actual result, evidence, blocker, or next step changes.
+- Require a root `AGENTS.md`. Add scoped `AGENTS.md` files wherever a directory has its own stack, functional surface, security boundary, data boundary, validation commands, or release process.
 - Read the root rules and every scoped rule on the path to the file being changed. A child rule adds local detail; it does not silently weaken a root safety boundary.
 - Separate approved target behavior from current implementation facts. Product and contract documents describe what should exist. Code, Git, tests, and runtime evidence describe what exists now.
 - Label gaps and boundaries plainly. Never turn `PARTIAL`, `TODO / GAP`, `MANUAL_REQUIRED`, `BLOCKED`, or `FORBIDDEN / OUT_OF_SCOPE` into `IMPLEMENTED` without current evidence.
@@ -64,12 +64,10 @@ Every managed project must have:
 - `README.md`
 - `AGENTS.md`
 - `PLAN.md`
-- `CHANGELOG.md`
-- `docs/README.md`
-- `docs/CODEX_DOC_ROUTER.md`
-- `docs/DOCS_DICTIONARY.md`
 
-Use the templates in `assets/templates/project/` only for missing files. Adapt their wording to the project. Keep information mandatory even when a small project combines several documents.
+Add `CHANGELOG.md` when the project needs a durable capability history. Add `docs/README.md`, `docs/CODEX_DOC_ROUTER.md`, and `docs/DOCS_DICTIONARY.md` when documentation spans several files, audiences, or work areas. Keep the responsibilities covered when a small project combines them.
+
+Use the templates in `assets/templates/project/` only for missing files. Adapt their wording to the project.
 
 Use the initializer for `GREENFIELD`, or when a `BROWNFIELD` repository has explicitly chosen this standard layout:
 
@@ -85,12 +83,12 @@ The initializer does not overwrite existing files. Run it with `--dry-run` first
 
 ## Turn product intent into executable work
 
-1. Extract users, problems, outcomes, scope, non-goals, business rules, constraints, unknowns, and external dependencies.
+1. Extract actors or systems, problems, outcomes, scope, non-goals, domain rules, constraints, unknowns, and external dependencies.
 2. Assign stable requirement IDs to material behavior.
-3. Write current product, business-flow, state, data, page, API, permission, error, and visibility contracts at the depth the project needs.
+3. Write the relevant behavior, flow, state, data, interface, API, permission, error, and visibility contracts at the depth the project needs.
 4. Map each requirement to its implementation and evidence in the traceability matrix.
 5. Record unresolved product decisions as `TODO / GAP` or `BLOCKED`; do not invent an answer.
-6. Split work into vertical slices that reach from user action through contracts, code, data, tests, and documentation.
+6. Split work into end-to-end slices that connect observable behavior with contracts, code, data, tests, and documentation.
 7. Put one active slice in `PLAN.md`. Keep later slices under next or later work.
 
 ## Implement one slice at a time

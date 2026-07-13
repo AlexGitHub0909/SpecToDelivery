@@ -5,19 +5,19 @@
 - Required information
 - Suggested document map
 - Requirement IDs
-- Vertical slices
+- Implementation slices
 - Change impact
 - Scaling the package
 
 ## Required information
 
-Capture this information even when a small project combines it into fewer files:
+Capture what applies to the project. Mark an area as not applicable instead of inventing details. A small project may combine several areas in one file.
 
-- product purpose, users, problems, outcomes, scope, and non-goals;
+- project purpose, actors, problems, outcomes, scope, and non-goals;
 - roles, permissions, visibility, and sensitive data boundaries;
-- business flows, states, transitions, errors, and recovery paths;
-- pages or interfaces, user actions, loading, empty, error, and disabled states;
-- APIs, inputs, outputs, authentication, authorization, errors, and idempotency;
+- observable behavior, workflows, states, transitions, errors, and recovery paths;
+- user interfaces, actions, loading, empty, error, and disabled states when present;
+- programmatic interfaces, inputs, outputs, authentication, authorization, errors, and idempotency when present;
 - entities, relationships, ownership, retention, migrations, units, and precision where relevant;
 - external integrations, environments, credentials, timeouts, retries, and production-write boundaries;
 - acceptance evidence and release impact.
@@ -28,9 +28,9 @@ Use as many files as the project needs, not as many as the template offers.
 
 | Document | Responsibility |
 |---|---|
-| Product spec | Purpose, users, scope, non-goals, capabilities, and boundaries |
-| Business flow spec | User and system steps, decisions, failures, and outcomes |
-| State and data contract | Entities, state transitions, invariants, ownership, and amounts |
+| Product spec | Purpose, actors, scope, non-goals, capabilities, and boundaries |
+| Behavior and flow spec | Observable behavior, system steps, decisions, failures, and outcomes |
+| State and data contract | Entities, state transitions, invariants, ownership, units, and precision |
 | Frontend or interface contract | Pages, fields, actions, states, visibility, and accessibility |
 | API contract | Routes, requests, responses, permissions, errors, and examples |
 | Security contract | Roles, credentials, data exposure, audit, and external effects |
@@ -55,7 +55,7 @@ For each requirement, map:
 
 ```text
 product intent
--> business flow
+-> behavior or flow
 -> interface or API contract
 -> state and data rule
 -> PLAN task
@@ -67,9 +67,9 @@ product intent
 
 Use `PARTIAL`, `TODO / GAP`, `MANUAL_REQUIRED`, `BLOCKED`, and `FORBIDDEN / OUT_OF_SCOPE` when the chain is incomplete.
 
-## Vertical slices
+## Implementation slices
 
-A useful slice starts with a user or operator action and ends with an observable result. It includes the contracts, code, data, errors, tests, and documentation needed for that result.
+A useful slice starts with an observable trigger and ends with an observable result. It includes the contracts, code, data, errors, tests, and documentation needed for that result.
 
 Avoid plans that finish all database work, then all APIs, then all pages without proving a working path. Shared infrastructure can come first when a slice cannot work without it, but keep that dependency explicit.
 

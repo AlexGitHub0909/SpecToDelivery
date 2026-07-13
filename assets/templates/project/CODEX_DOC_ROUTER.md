@@ -4,7 +4,7 @@ Read `../AGENTS.md`, `../PLAN.md`, and the nearest scoped `AGENTS.md` for every 
 
 | Task | Required documents |
 |---|---|
-| Product scope or requirements | `specs/product-spec.md`, `specs/business-flow-spec.md`, `specs/traceability-matrix.md` |
+| Product scope or requirements | `specs/product-spec.md`, `specs/behavior-and-flow-spec.md`, `specs/traceability-matrix.md` |
 | Page or user interaction | Product spec, flow spec, page/interface contract, design and accessibility rules |
 | API or backend behavior | Product spec, flow spec, API contract, state/data contract, security contract |
 | Database or migration | State/data contract, migration rules, API contract, backup and rollback rules |

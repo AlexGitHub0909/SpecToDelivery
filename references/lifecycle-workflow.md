@@ -28,7 +28,7 @@ Move through gates in order. A later gate may expose a defect in an earlier one;
 | Orientation | Project mode, repository state, authority, owners, constraints, and unknowns are recorded |
 | Governance | Root/scoped `AGENTS.md`, `PLAN.md`, document routing, and fact-source order are usable |
 | Specification | Scope, flows, contracts, status labels, and requirement IDs are clear enough to implement |
-| Planning | Vertical slices have dependencies, acceptance evidence, and stop or rollback conditions |
+| Planning | Implementation slices have dependencies, acceptance evidence, and stop or rollback conditions |
 | Implementation | The current slice is implemented without claiming later work |
 | Verification | Fresh checks support each completion claim; gaps stay visible |
 | Release | Impact, environment, migration, backup, rollback, health, and post-release evidence are ready |

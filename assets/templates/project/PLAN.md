@@ -26,7 +26,7 @@ Record product sources, repository state, working behavior, failures, tests, and
 
 ### Implementation approach
 
-Describe the next vertical slice and its dependencies after the evidence review.
+Describe the next implementation slice and its dependencies after the evidence review.
 
 ### Risks and boundaries
 

@@ -18,12 +18,18 @@ REQUIRED_FILES = (
     "docs/CODEX_DOC_ROUTER.md",
     "docs/DOCS_DICTIONARY.md",
     "docs/specs/product-spec.md",
-    "docs/specs/business-flow-spec.md",
+    "docs/specs/behavior-and-flow-spec.md",
     "docs/specs/traceability-matrix.md",
     "docs/operations/testing-and-acceptance.md",
     "docs/operations/test-evidence-matrix.md",
     "docs/operations/release-runbook.md",
 )
+
+LEGACY_EQUIVALENTS = {
+    "docs/specs/behavior-and-flow-spec.md": (
+        "docs/specs/business-flow-spec.md",
+    ),
+}
 
 AGENT_HEADINGS = (
     "## Scope",
@@ -96,15 +102,24 @@ def main() -> int:
     contents: dict[str, str] = {}
 
     for relative in REQUIRED_FILES:
-        path = root / relative
-        if not path.is_file():
+        candidates = (relative, *LEGACY_EQUIVALENTS.get(relative, ()))
+        selected = next(
+            (candidate for candidate in candidates if (root / candidate).is_file()),
+            None,
+        )
+        if selected is None:
             errors.append(f"missing required file: {relative}")
             continue
+        if selected != relative:
+            warnings.append(
+                f"legacy path accepted: {selected}; prefer {relative} for new projects"
+            )
+        path = root / selected
         content = read_text(path, errors)
         contents[relative] = content
         marker = TEMPLATE_MARKER.search(content)
         if marker:
-            errors.append(f"unresolved template marker in {relative}: {marker.group(0)}")
+            errors.append(f"unresolved template marker in {selected}: {marker.group(0)}")
 
     root_agents = contents.get("AGENTS.md", "")
     if root_agents:

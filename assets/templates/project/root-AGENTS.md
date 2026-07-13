@@ -4,9 +4,9 @@
 
 This file applies to the entire {{PROJECT_NAME}} repository. A scoped `AGENTS.md` adds rules for its directory and inherits these root rules.
 
-## Product and stage
+## Purpose and stage
 
-Describe the product, current stage, users, main workflow, and hard capability boundaries. Keep planned features separate from implemented ones.
+Describe the project purpose, current stage, actors, main workflow, and hard capability boundaries. Keep planned features separate from implemented ones.
 
 ## Required context
 

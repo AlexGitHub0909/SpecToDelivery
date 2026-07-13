@@ -21,7 +21,7 @@ CORE_FILES = {
     "docs/CODEX_DOC_ROUTER.md": "CODEX_DOC_ROUTER.md",
     "docs/DOCS_DICTIONARY.md": "DOCS_DICTIONARY.md",
     "docs/specs/product-spec.md": "product-spec.md",
-    "docs/specs/business-flow-spec.md": "business-flow-spec.md",
+    "docs/specs/behavior-and-flow-spec.md": "behavior-and-flow-spec.md",
     "docs/specs/traceability-matrix.md": "traceability-matrix.md",
     "docs/operations/testing-and-acceptance.md": "testing-and-acceptance.md",
     "docs/operations/test-evidence-matrix.md": "test-evidence-matrix.md",
@@ -32,7 +32,7 @@ CORE_FILES = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Copy missing zero-to-one governance templates into a project."
+        description="Copy missing project delivery governance templates into a project."
     )
     parser.add_argument("project_root", help="Target project directory")
     parser.add_argument("--name", required=True, help="Human-readable project name")

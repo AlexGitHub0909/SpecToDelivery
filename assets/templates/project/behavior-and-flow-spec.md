@@ -1,4 +1,4 @@
-# Business flow specification
+# Behavior and flow specification
 
 ## Flow index
 
