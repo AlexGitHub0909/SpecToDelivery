@@ -6,22 +6,59 @@ This Codex skill turns a product brief or an existing repository into a project 
 
 It is opinionated about project control: every managed project needs a current `PLAN.md`, a root `AGENTS.md`, and scoped `AGENTS.md` files where local engineering rules differ. It also keeps product intent separate from implementation evidence, so a written requirement never passes as finished code.
 
-## Install from GitHub
+## Installation
 
-Clone the repository into your personal Codex skills directory:
+You need Git and a Codex App, CLI, or IDE Extension version that supports Skills. Under the current [Codex directory convention](https://developers.openai.com/codex/concepts/customization), personal skills go in `$HOME/.agents/skills`, while project-shared skills go in `.agents/skills` inside the repository.
+
+### Personal installation
+
+A personal installation makes the skill available to all projects on the same machine.
+
+macOS or Linux:
 
 ```bash
+mkdir -p "$HOME/.agents/skills"
 git clone https://github.com/AlexGitHub0909/build-project-zero-to-one.git \
-  ~/.codex/skills/build-project-zero-to-one
+  "$HOME/.agents/skills/build-project-zero-to-one"
 ```
 
-If you already installed it with Git, update it in place:
+Windows PowerShell:
+
+```powershell
+$skillsDir = Join-Path $HOME ".agents\skills"
+New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
+git clone https://github.com/AlexGitHub0909/build-project-zero-to-one.git `
+  (Join-Path $skillsDir "build-project-zero-to-one")
+```
+
+Update a personal installation:
 
 ```bash
-git -C ~/.codex/skills/build-project-zero-to-one pull --ff-only
+git -C "$HOME/.agents/skills/build-project-zero-to-one" pull --ff-only
 ```
 
-Start a new Codex task after installation so the skill list refreshes. The repository is self-contained; it does not require an MCP server or a separate plugin.
+In PowerShell, use:
+
+```powershell
+git -C (Join-Path $HOME ".agents\skills\build-project-zero-to-one") pull --ff-only
+```
+
+### Project-shared installation
+
+To use the skill only in one repository, place it under that project's `.agents/skills` directory. A Git submodule keeps its version and upstream updates explicit:
+
+```bash
+git submodule add https://github.com/AlexGitHub0909/build-project-zero-to-one.git .agents/skills/build-project-zero-to-one
+git commit -m "chore: add project zero-to-one skill"
+```
+
+After cloning the project on another machine, run `git submodule update --init --recursive`. To move to a newer upstream version, run `git submodule update --remote .agents/skills/build-project-zero-to-one`, review the result, and commit the updated submodule pointer.
+
+If the project does not use submodules, copy the skill into the same directory and commit it with the project, without retaining a nested `.git` directory.
+
+Some older Codex versions use `~/.codex/skills`. If an existing installation is already detected, do not install a duplicate. For new installations, use `$HOME/.agents/skills` for personal use or `.agents/skills` inside a project. Codex normally detects skill changes automatically; restart Codex if the skill does not appear.
+
+The repository is self-contained. It does not require an MCP server or a separate plugin.
 
 ## When to use it
 

@@ -6,22 +6,59 @@
 
 它有几个明确要求：项目必须维护当前 `PLAN.md`，根目录必须有 `AGENTS.md`，存在独立工程边界的子目录也要有自己的 `AGENTS.md`。产品目标和当前实现分开记录，文档里写了某项能力，不代表代码已经完成。
 
-## 从 GitHub 安装
+## 安装
 
-把仓库克隆到个人 Codex Skills 目录：
+需要本机已经安装 Git，并使用支持 Skills 的 Codex App、CLI 或 IDE Extension。按照当前 [Codex 目录约定](https://developers.openai.com/codex/concepts/customization)，个人 Skill 放在 `$HOME/.agents/skills`，项目共享 Skill 放在仓库的 `.agents/skills`。
+
+### 个人安装
+
+个人安装会让这个 Skill 在本机所有项目中可用。
+
+macOS 或 Linux：
 
 ```bash
+mkdir -p "$HOME/.agents/skills"
 git clone https://github.com/AlexGitHub0909/build-project-zero-to-one.git \
-  ~/.codex/skills/build-project-zero-to-one
+  "$HOME/.agents/skills/build-project-zero-to-one"
 ```
 
-如果已经通过 Git 安装，可以在原目录更新：
+Windows PowerShell：
+
+```powershell
+$skillsDir = Join-Path $HOME ".agents\skills"
+New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
+git clone https://github.com/AlexGitHub0909/build-project-zero-to-one.git `
+  (Join-Path $skillsDir "build-project-zero-to-one")
+```
+
+更新个人安装：
 
 ```bash
-git -C ~/.codex/skills/build-project-zero-to-one pull --ff-only
+git -C "$HOME/.agents/skills/build-project-zero-to-one" pull --ff-only
 ```
 
-安装完成后新建一个 Codex 任务，让 Skill 列表重新加载。这个仓库可以独立使用，不依赖 MCP Server，也不需要额外安装 Plugin。
+PowerShell 中可使用：
+
+```powershell
+git -C (Join-Path $HOME ".agents\skills\build-project-zero-to-one") pull --ff-only
+```
+
+### 项目共享安装
+
+如果只想让一个仓库使用这个 Skill，可以把它放在项目的 `.agents/skills`。使用 Git Submodule 能保留独立版本和上游更新记录：
+
+```bash
+git submodule add https://github.com/AlexGitHub0909/build-project-zero-to-one.git .agents/skills/build-project-zero-to-one
+git commit -m "chore: add project zero-to-one skill"
+```
+
+其他协作者克隆项目后，需要运行 `git submodule update --init --recursive`。更新到上游版本时，运行 `git submodule update --remote .agents/skills/build-project-zero-to-one`，检查结果后提交新的 Submodule 指针。
+
+不使用 Submodule 时，也可以把 Skill 内容复制到同一目录并随项目提交，但不要保留嵌套的 `.git` 目录。
+
+部分旧版 Codex 使用 `~/.codex/skills`。如果现有安装已经能被识别，不必重复安装；新安装按用途使用个人目录 `$HOME/.agents/skills` 或项目目录 `.agents/skills`。Codex 通常会自动发现 Skill，未出现时重启 Codex。
+
+这个仓库可以独立使用，不依赖 MCP Server，也不需要额外安装 Plugin。
 
 ## 适用场景
 
