@@ -152,6 +152,7 @@ build-project-zero-to-one/
 ├── SKILL.md
 ├── README.md          # 中文，GitHub 默认展示
 ├── README.en.md       # English
+├── LICENSE            # MIT
 ├── agents/
 ├── references/
 ├── scripts/
@@ -160,4 +161,6 @@ build-project-zero-to-one/
 
 Codex 执行时读取 `SKILL.md`。中英文 README 是给使用者和维护者看的说明。
 
-公开自己的分支前，应重新检查模板里的示例，并根据预期的使用方式选择合适的开源许可证。
+## 许可证
+
+本项目采用 [MIT License](LICENSE)。你可以使用、复制、修改和分发，但必须保留原版权及许可证声明。本项目不提供任何担保。

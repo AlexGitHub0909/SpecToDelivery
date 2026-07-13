@@ -152,6 +152,7 @@ build-project-zero-to-one/
 ├── SKILL.md
 ├── README.md          # Chinese, shown by default on GitHub
 ├── README.en.md       # English
+├── LICENSE            # MIT
 ├── agents/
 ├── references/
 ├── scripts/
@@ -160,4 +161,6 @@ build-project-zero-to-one/
 
 Codex follows `SKILL.md`. The two README files are for people who want to understand or maintain the skill.
 
-Before publishing a fork, review the templates, replace repository-specific examples, and choose a license that fits how you want others to use the work.
+## License
+
+This project is available under the [MIT License](LICENSE). You may use, copy, modify, and distribute it as long as you retain the original copyright and license notice. The work is provided without warranty.
