@@ -44,6 +44,15 @@ For current implementation facts, prefer current code, Git, generated inventorie
 
 If approved behavior and implementation disagree, record the gap and repair the correct source. Do not silently turn one into the other.
 
+## Capability and tool routing
+
+- Use the repository's approved commands, dependencies, scripts, and services before adding another capability.
+- Use a specialized Skill or plugin only when the task needs that capability. Keep optional tools replaceable.
+- Read the capability's instructions and check availability, permissions, cost, network access, and side effects before use.
+- Record required capabilities, external authority, fallback paths, and blockers in `PLAN.md`.
+- Do not install, enable, authorize, or write through an external capability without clear user authority.
+- Validate the resulting artifact or system state with the project's own acceptance rules. Tool execution alone is not evidence of correctness.
+
 ## Rules
 
 - Check Git status before editing and preserve unrelated user changes.

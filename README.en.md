@@ -83,6 +83,19 @@ The skill infers needed work areas from product material and repository evidence
 
 These six areas are not a fixed architecture. A library, CLI, data pipeline, model, embedded system, or another distinct responsibility can use a project-specific work area. A work area is not a directory: one directory may serve several areas, and one area may span several directories.
 
+## Use Skills and plugins when needed
+
+A project may use Skills, plugins, connectors, or specialist tools already available in the environment, but they are not default dependencies. Define the result first, then choose a capability that can produce and verify it.
+
+| Capability type | Treatment |
+|---|---|
+| Existing project commands, scripts, and dependencies | Prefer them and follow the nearest `AGENTS.md` |
+| Optional specialist capability | Use it for work such as design, browser verification, or document handling while keeping a normal fallback |
+| Required delivery capability | Record availability, authority, owner, and fallback in `PLAN.md`; mark a missing dependency as a blocker |
+| Organization- or project-specific integration | Keep credentials, accounts, internal addresses, and operating rules in the project repository |
+
+Read the capability's instructions before use and check permissions, cost, network access, and external side effects. Do not install or enable a plugin, create an external account, or write to a remote system without clear authority. A successful tool run proves that the tool ran; the project still has to validate the resulting artifact or system state.
+
 ## Other prompts
 
 Start from product material:
@@ -160,7 +173,7 @@ You may copy the skill instead, but do not keep a nested `.git` directory.
 
 </details>
 
-For personal or repository use, this skill does not require an MCP server or a separate plugin. Restart Codex if the skill does not appear after installation.
+For personal or repository use, this skill has no required MCP server or plugin. A project may still use capabilities that have already been approved for that environment. Restart Codex if the skill does not appear after installation.
 
 ## Initialization and audit scripts
 
@@ -205,7 +218,7 @@ spec-to-delivery/
 ├── README.md                # Chinese, shown by default on GitHub
 ├── README.en.md             # English
 ├── agents/openai.yaml       # Skill list metadata
-├── references/              # Core rules and on-demand work-area rules
+├── references/              # Core rules, capability routing, and on-demand work-area rules
 ├── assets/templates/project # Project governance templates
 ├── scripts/                 # Initialization and audit helpers
 ├── tests/                   # Script regression tests

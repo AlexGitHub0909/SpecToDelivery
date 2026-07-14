@@ -17,6 +17,13 @@ Add rows only for work areas that apply, remain open, are deferred, or would be 
 | Work area | Status | Evidence or decision | Rule or contract route | Owner |
 |---|---|---|---|---|
 
+## Capability decisions
+
+Keep this section only when a specialized Skill, plugin, connector, external service, or artifact tool affects delivery, permissions, acceptance evidence, or the fallback path. Routine repository commands do not need a row.
+
+| Need | Selected capability or tool | Required or optional | Availability and authority | Fallback or blocker |
+|---|---|---|---|---|
+
 ## Current task
 
 ### Goal

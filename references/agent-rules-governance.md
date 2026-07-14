@@ -38,6 +38,7 @@ The root file should cover:
 - approved technology and documentation language choices, plus the owner of any open decision;
 - fact sources and document routing;
 - minimal implementation and reuse rules;
+- capability and tool routing, including approval, external effects, and fallback rules;
 - defect and change-control workflow;
 - Git, credential, external-write, and production rules;
 - the scoped-rule routing table;

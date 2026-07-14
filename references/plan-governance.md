@@ -23,6 +23,8 @@ Keep these sections near the top:
 
 For `GREENFIELD`, a material architecture change, or a change in product responsibility, add an applicable-work-areas table near current status. Record only areas that apply, remain open, are deferred, or would surprise a new contributor if omitted. Keep detailed rules in contracts and `AGENTS.md`.
 
+Add a capability-decisions table only when a specialized Skill, plugin, connector, external service, or artifact tool affects delivery, permissions, acceptance evidence, or fallback. Record the need, selected capability, whether it is required, current availability and authority, and the fallback or blocker. Do not inventory routine repository commands.
+
 ## Update rules
 
 Update `PLAN.md`:
@@ -33,6 +35,7 @@ Update `PLAN.md`:
 - when implementation changes approved behavior;
 - when the user confirms or delegates a material technology or documentation language decision;
 - when a work area becomes applicable, deferred, not applicable, or unresolved;
+- when a required capability, permission, or fallback changes;
 - when a blocker or manual action appears or clears;
 - after verification, with actual commands and results;
 - after completion, with the next concrete task.

@@ -45,6 +45,8 @@ Read [specification-and-traceability.md](references/specification-and-traceabili
 
 Read [verification-and-release.md](references/verification-and-release.md) before declaring work complete, changing a high-risk subsystem, or preparing a release.
 
+Read [capability-routing.md](references/capability-routing.md) when the task may need a specialized Skill, plugin, connector, external service, or artifact tool beyond the repository's existing commands. Load it only when the capability changes how the work can be completed or verified.
+
 ## Classify the project first
 
 Choose one mode and record it in `PLAN.md`:
@@ -62,6 +64,12 @@ Use the product material, repository evidence, and [work-area-discovery.md](refe
 Ask no more than three related questions at a time, and ask only when the answer changes product scope, architecture, data ownership, release responsibility, or acceptance evidence. Phrase questions in product terms instead of asking the user to choose from unexplained technologies.
 
 A work area is not a directory. Multiple areas may share one scoped `AGENTS.md`, and one area may span several directories. Create scoped rules only where a real local boundary exists.
+
+## Route specialized capabilities
+
+Describe the needed outcome before choosing a tool. Prefer approved repository commands and already available capabilities. Treat a Skill or plugin as optional unless the acceptance criteria cannot be met without it.
+
+Record a capability decision in `PLAN.md` only when it affects delivery, permissions, external writes, acceptance evidence, or the fallback path. Do not install, enable, authorize, or write through an external capability without clear user authority. If a required capability is unavailable, use a safe fallback or mark the dependency `BLOCKED_EXTERNAL` instead of pretending the evidence exists.
 
 ## Restore context
 

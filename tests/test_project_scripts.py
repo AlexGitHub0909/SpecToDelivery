@@ -93,6 +93,13 @@ class ProjectScriptTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(readme.read_text(encoding="utf-8"), "# Existing project\n")
 
+    def test_initializer_includes_capability_decision_points(self) -> None:
+        plan = (self.project / "PLAN.md").read_text(encoding="utf-8")
+        agents = (self.project / "AGENTS.md").read_text(encoding="utf-8")
+
+        self.assertIn("## Capability decisions", plan)
+        self.assertIn("## Capability and tool routing", agents)
+
     def test_initializer_rejects_scoped_symlink_escape(self) -> None:
         outside = Path(self.temp_dir.name) / "outside"
         outside.mkdir()
