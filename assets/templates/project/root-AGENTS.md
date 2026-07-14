@@ -20,11 +20,20 @@ Before changing the project, read:
 - the contracts routed for the task;
 - current code, tests, Git state, and runtime examples.
 
+## Work area routing
+
+List only confirmed work areas. Keep open, deferred, and not-applicable decisions in `PLAN.md`.
+
+| Work area | Scope | Required rules and contracts |
+|---|---|---|
+
+Work areas do not have to match directories. Several areas may share one scoped rule file.
+
 ## Scoped rule routing
 
 Add a row only when the scoped file exists.
 
-| Work area | Required rules |
+| Path | Required rules |
 |---|---|
 | Whole project | `AGENTS.md` |
 {{SCOPED_RULE_ROWS}}

@@ -83,12 +83,30 @@ The repository is self-contained. It does not require an MCP server or a separat
 | Code and project documents already exist | `BROWNFIELD` | Audit Git, plans, documents, code, and tests before acting on confirmed gaps |
 | You only need specifications and handoff material | `SPEC_ONLY` | Produce contracts, implementation slices, and acceptance evidence without changing application code |
 
+## Load engineering rules on demand
+
+The skill first infers the needed work areas from product material and repository evidence. It asks the user only when the evidence is insufficient and the answer would change scope, architecture, data ownership, release responsibility, or acceptance. It groups no more than three related questions at a time.
+
+| Work area | Load its rules when the project needs |
+|---|---|
+| Website | Public pages, content distribution, search discovery, campaigns, documentation, or public forms |
+| Frontend | Interactive web, mobile, or desktop interfaces and user flows |
+| Backend | Server-side rules, authentication, jobs, queues, or private integrations |
+| API | Stable programmatic interfaces for clients, partners, automation, or other systems |
+| Database | Durable business state, accounts, history, reporting, search, or audit data |
+| Operations | Deployment, environments, domains, background runtime, monitoring, release, or recovery ownership |
+
+These six areas are not exhaustive. A library, CLI, data pipeline, model, embedded system, or another distinct responsibility can use a project-specific work area instead of being forced into the nearest category.
+
+A work area is not a fixed directory. One directory may serve several areas, and one area may span several directories. The result is recorded in `PLAN.md` as `APPLIES`, `NOT_APPLICABLE`, `DEFERRED`, or `OPEN_DECISION`. The skill loads rules only for areas that apply or need a decision.
+
 ## Project governance
 
 The supplied templates cover:
 
 - project entry and local setup;
 - root and scoped agent rules;
+- on-demand work-area discovery and rule routing;
 - current planning and change history;
 - document routing and ownership;
 - product scope, behavior, and system flows;
@@ -109,7 +127,7 @@ Use $spec-to-delivery to audit this repository, recover the current plan, and im
 For a new project:
 
 ```text
-Use $spec-to-delivery to turn this PRD into a greenfield project. Set up the plan, agent rules, specs, traceability, and the first working slice.
+Use $spec-to-delivery to turn this PRD into a greenfield project. Infer which website, frontend, backend, API, database, and operations work areas apply from the product material, and ask me only about unresolved choices that would change scope or architecture. Then set up the plan, scoped agent rules, specs, traceability, and the first working slice.
 ```
 
 For a spec-only handoff:
@@ -159,7 +177,7 @@ spec-to-delivery/
 ├── README.en.md       # English
 ├── LICENSE            # MIT
 ├── agents/
-├── references/
+├── references/        # Core rules and on-demand work-area rules
 ├── scripts/
 └── assets/templates/project/
 ```

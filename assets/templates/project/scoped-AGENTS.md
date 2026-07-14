@@ -4,6 +4,10 @@
 
 This file applies to `{{SCOPED_PATH}}`. It inherits the repository root `AGENTS.md`.
 
+## Work areas
+
+List the confirmed website, frontend, backend, API, database, operations, or project-specific work areas served by this directory. Do not infer them from the directory name alone.
+
 ## Responsibility
 
 Describe what this directory owns and what belongs elsewhere.

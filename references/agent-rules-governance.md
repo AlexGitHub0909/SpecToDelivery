@@ -25,12 +25,15 @@ Add one when a directory has one or more of these:
 
 Do not add an `AGENTS.md` to every folder. A rule file should resolve a real difference.
 
+A work area is not a directory. Several work areas may share one scoped file, and one work area may span several directories. Route rules by actual ownership and local boundaries rather than mirroring a generic website, frontend, backend, API, database, or operations list.
+
 ## Root file content
 
 The root file should cover:
 
 - product purpose and current stage;
 - hard domain and capability boundaries;
+- applicable work areas and their rule or contract routes;
 - current technology facts;
 - approved technology and documentation language choices, plus the owner of any open decision;
 - fact sources and document routing;
@@ -46,6 +49,7 @@ The root file should cover:
 A scoped file should cover:
 
 - scope and inherited rules;
+- confirmed work areas served by the directory;
 - directory responsibility and structure;
 - patterns and components to reuse;
 - local security, data, and visibility boundaries;

@@ -21,6 +21,8 @@ Keep these sections near the top:
 - Blockers and external actions
 - Validation baseline
 
+For `GREENFIELD`, a material architecture change, or a change in product responsibility, add an applicable-work-areas table near current status. Record only areas that apply, remain open, are deferred, or would surprise a new contributor if omitted. Keep detailed rules in contracts and `AGENTS.md`.
+
 ## Update rules
 
 Update `PLAN.md`:
@@ -30,6 +32,7 @@ Update `PLAN.md`:
 - when evidence invalidates the planned approach;
 - when implementation changes approved behavior;
 - when the user confirms or delegates a material technology or documentation language decision;
+- when a work area becomes applicable, deferred, not applicable, or unresolved;
 - when a blocker or manual action appears or clears;
 - after verification, with actual commands and results;
 - after completion, with the next concrete task.

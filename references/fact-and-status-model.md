@@ -43,6 +43,19 @@ Use the same labels across plans, specs, traceability, tests, and release record
 
 Never use vague equivalents such as "basically done" or "should work" in evidence fields.
 
+## Work-area applicability
+
+Work-area labels describe which rules the project needs. They do not describe implementation or release progress.
+
+| Status | Meaning |
+|---|---|
+| `APPLIES` | The approved scope or current repository needs this work area |
+| `NOT_APPLICABLE` | Current approved scope does not need it |
+| `DEFERRED` | It may be needed later, but it is outside the current phase |
+| `OPEN_DECISION` | Available evidence cannot settle whether it applies |
+
+Never use `APPLIES` as evidence that code exists. Do not turn `DEFERRED` into `FORBIDDEN / OUT_OF_SCOPE` unless the approved product boundary says so.
+
 ## Canonical and derived documents
 
 Canonical documents define current intent or execution. Examples include product scope, contracts, `PLAN.md`, `AGENTS.md`, test standards, and the release runbook.

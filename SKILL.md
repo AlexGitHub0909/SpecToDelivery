@@ -1,6 +1,6 @@
 ---
 name: spec-to-delivery
-description: Turn a product brief, PRD, requirements document, or partial software repository into a planned, traceable project with current verification evidence. Use when Codex must establish a new software project, recover and continue an existing repository, produce a spec-only handoff, establish PLAN.md and root/scoped AGENTS.md rules, implement end-to-end slices, reconcile code with approved intent, or prepare evidence-backed release and rollback work.
+description: Turn a product brief, PRD, requirements document, or partial software repository into a planned, traceable project with current verification evidence. Use when Codex must establish a new software project, recover and continue an existing repository, produce a spec-only handoff, establish PLAN.md and root/scoped AGENTS.md rules, select only the website, frontend, backend, API, database, or operations rules that apply, implement end-to-end slices, reconcile code with approved intent, or prepare evidence-backed release and rollback work.
 ---
 
 # SpecToDelivery
@@ -30,6 +30,17 @@ Always read:
 
 Read [lifecycle-workflow.md](references/lifecycle-workflow.md) when starting, recovering, or handing off a project.
 
+Read [work-area-discovery.md](references/work-area-discovery.md) when establishing or revisiting project scope. Then load only the rules needed for confirmed work areas or an open decision:
+
+- [website-rules.md](references/website-rules.md) for public, discoverable, content-led, or marketing sites;
+- [frontend-rules.md](references/frontend-rules.md) for interactive web, mobile, or desktop interfaces;
+- [backend-rules.md](references/backend-rules.md) for server-side behavior, jobs, or integrations;
+- [api-rules.md](references/api-rules.md) for programmatic interfaces between systems or clients;
+- [database-rules.md](references/database-rules.md) for durable structured data or stateful storage;
+- [operations-rules.md](references/operations-rules.md) for deployment, release, runtime, monitoring, or recovery.
+
+Do not load all work-area references by default.
+
 Read [specification-and-traceability.md](references/specification-and-traceability.md) when turning product documents into requirements, flows, contracts, or implementation slices.
 
 Read [verification-and-release.md](references/verification-and-release.md) before declaring work complete, changing a high-risk subsystem, or preparing a release.
@@ -43,6 +54,14 @@ Choose one mode and record it in `PLAN.md`:
 - `SPEC_ONLY`: produce an implementation-ready specification or handoff without changing application code.
 
 If the requested work crosses more than one mode, finish the earlier gate before moving on. For example, complete the spec gate before implementation.
+
+## Classify applicable work areas
+
+Use the product material, repository evidence, and [work-area-discovery.md](references/work-area-discovery.md) before asking questions. Record confirmed or unresolved areas in `PLAN.md` as `APPLIES`, `NOT_APPLICABLE`, `DEFERRED`, or `OPEN_DECISION` when the distinction matters.
+
+Ask no more than three related questions at a time, and ask only when the answer changes product scope, architecture, data ownership, release responsibility, or acceptance evidence. Phrase questions in product terms instead of asking the user to choose from unexplained technologies.
+
+A work area is not a directory. Multiple areas may share one scoped `AGENTS.md`, and one area may span several directories. Create scoped rules only where a real local boundary exists.
 
 ## Restore context
 
@@ -82,6 +101,8 @@ python3 scripts/init_project.py /path/to/project \
 Add repeatable `--scoped path/to/directory` arguments only for directories with real local rule boundaries. The Python helpers manage governance files; they do not select or constrain the application's language or stack.
 
 The initializer does not overwrite existing files. Run it with `--dry-run` first. In a brownfield repository with equivalent canonical files, adapt individual templates instead of creating parallel documents.
+
+After classification, replace template instructions with the confirmed work-area rows, rule routes, owners, and concrete commands. Do not hand off an empty routing table or generic scoped `AGENTS.md` as finished governance.
 
 ## Turn product intent into executable work
 

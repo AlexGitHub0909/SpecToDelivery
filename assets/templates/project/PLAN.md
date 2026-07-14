@@ -10,6 +10,13 @@
 - Updated: {{DATE}}
 - Branch and revision: record after checking Git
 
+## Applicable work areas
+
+Add rows only for work areas that apply, remain open, are deferred, or would be surprising if omitted. Use `APPLIES`, `NOT_APPLICABLE`, `DEFERRED`, or `OPEN_DECISION`.
+
+| Work area | Status | Evidence or decision | Rule or contract route | Owner |
+|---|---|---|---|---|
+
 ## Current task
 
 ### Goal
