@@ -1,4 +1,4 @@
 interface:
-  display_name: "Product Definition to Verified Delivery"
+  display_name: "SpecToDelivery"
   short_description: "Plan, implement, verify, and hand off software projects"
-  default_prompt: "Use $build-project-zero-to-one to turn this brief or repository into a planned, traceable project with current verification evidence."
+  default_prompt: "Use $spec-to-delivery to turn this brief or repository into a planned, traceable project with current verification evidence."

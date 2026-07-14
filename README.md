@@ -1,6 +1,8 @@
 <p align="center"><samp>PRODUCT DEFINITION → PLAN → IMPLEMENTATION → EVIDENCE → HANDOFF</samp></p>
 
-<h1 align="center">从产品定义到可验证交付</h1>
+<h1 align="center">SpecToDelivery</h1>
+
+<p align="center"><strong>从产品定义到可验证交付</strong></p>
 
 <p align="center">把产品定义、执行计划、工程规则和验证证据维护在同一个仓库里的 Codex Skill。</p>
 
@@ -29,8 +31,8 @@ macOS 或 Linux：
 
 ```bash
 mkdir -p "$HOME/.agents/skills"
-git clone https://github.com/AlexGitHub0909/build-project-zero-to-one.git \
-  "$HOME/.agents/skills/build-project-zero-to-one"
+git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
+  "$HOME/.agents/skills/spec-to-delivery"
 ```
 
 Windows PowerShell：
@@ -38,20 +40,20 @@ Windows PowerShell：
 ```powershell
 $skillsDir = Join-Path $HOME ".agents\skills"
 New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
-git clone https://github.com/AlexGitHub0909/build-project-zero-to-one.git `
-  (Join-Path $skillsDir "build-project-zero-to-one")
+git clone https://github.com/AlexGitHub0909/SpecToDelivery.git `
+  (Join-Path $skillsDir "spec-to-delivery")
 ```
 
 更新个人安装：
 
 ```bash
-git -C "$HOME/.agents/skills/build-project-zero-to-one" pull --ff-only
+git -C "$HOME/.agents/skills/spec-to-delivery" pull --ff-only
 ```
 
 PowerShell 中可使用：
 
 ```powershell
-git -C (Join-Path $HOME ".agents\skills\build-project-zero-to-one") pull --ff-only
+git -C (Join-Path $HOME ".agents\skills\spec-to-delivery") pull --ff-only
 ```
 
 ### 项目共享安装
@@ -59,11 +61,11 @@ git -C (Join-Path $HOME ".agents\skills\build-project-zero-to-one") pull --ff-on
 如果只想让一个仓库使用这个 Skill，可以把它放在项目的 `.agents/skills`。使用 Git Submodule 能保留独立版本和上游更新记录：
 
 ```bash
-git submodule add https://github.com/AlexGitHub0909/build-project-zero-to-one.git .agents/skills/build-project-zero-to-one
+git submodule add https://github.com/AlexGitHub0909/SpecToDelivery.git .agents/skills/spec-to-delivery
 git commit -m "chore: add project delivery skill"
 ```
 
-其他协作者克隆项目后，需要运行 `git submodule update --init --recursive`。更新到上游版本时，运行 `git submodule update --remote .agents/skills/build-project-zero-to-one`，检查结果后提交新的 Submodule 指针。
+其他协作者克隆项目后，需要运行 `git submodule update --init --recursive`。更新到上游版本时，运行 `git submodule update --remote .agents/skills/spec-to-delivery`，检查结果后提交新的 Submodule 指针。
 
 不使用 Submodule 时，也可以把 Skill 内容复制到同一目录并随项目提交，但不要保留嵌套的 `.git` 目录。
 
@@ -99,19 +101,19 @@ git commit -m "chore: add project delivery skill"
 把产品材料或目标仓库交给 Codex，并明确调用 Skill：
 
 ```text
-使用 $build-project-zero-to-one 审计这个仓库，恢复当前计划，然后实施下一项有完整验证证据的工作。
+使用 $spec-to-delivery 审计这个仓库，恢复当前计划，然后实施下一项有完整验证证据的工作。
 ```
 
 创建新项目：
 
 ```text
-使用 $build-project-zero-to-one 把这份 PRD 建成一个 GREENFIELD 项目。先建立 PLAN、分层 AGENTS、规格和追溯关系，再完成第一个可运行、可验证的实施切片。
+使用 $spec-to-delivery 把这份 PRD 建成一个 GREENFIELD 项目。先建立 PLAN、分层 AGENTS、规格和追溯关系，再完成第一个可运行、可验证的实施切片。
 ```
 
 只做规格交接：
 
 ```text
-使用 $build-project-zero-to-one 的 SPEC_ONLY 模式。输出产品契约、实施切片、验收证据和发布注意事项，不修改应用代码。
+使用 $spec-to-delivery 的 SPEC_ONLY 模式。输出产品契约、实施切片、验收证据和发布注意事项，不修改应用代码。
 ```
 
 ## 初始化治理文件
@@ -149,7 +151,7 @@ python3 scripts/audit_project.py /path/to/project
 ## Skill 目录
 
 ```text
-build-project-zero-to-one/
+spec-to-delivery/
 ├── SKILL.md
 ├── README.md          # 中文，GitHub 默认展示
 ├── README.en.md       # English

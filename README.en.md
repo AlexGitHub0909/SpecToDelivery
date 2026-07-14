@@ -1,6 +1,8 @@
 <p align="center"><samp>PRODUCT DEFINITION → PLAN → IMPLEMENTATION → EVIDENCE → HANDOFF</samp></p>
 
-<h1 align="center">From product definition to verified delivery</h1>
+<h1 align="center">SpecToDelivery</h1>
+
+<p align="center"><strong>From product definition to verified delivery</strong></p>
 
 <p align="center">A Codex Skill that keeps product intent, execution plans, engineering rules, and verification evidence in one repository.</p>
 
@@ -29,8 +31,8 @@ macOS or Linux:
 
 ```bash
 mkdir -p "$HOME/.agents/skills"
-git clone https://github.com/AlexGitHub0909/build-project-zero-to-one.git \
-  "$HOME/.agents/skills/build-project-zero-to-one"
+git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
+  "$HOME/.agents/skills/spec-to-delivery"
 ```
 
 Windows PowerShell:
@@ -38,20 +40,20 @@ Windows PowerShell:
 ```powershell
 $skillsDir = Join-Path $HOME ".agents\skills"
 New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
-git clone https://github.com/AlexGitHub0909/build-project-zero-to-one.git `
-  (Join-Path $skillsDir "build-project-zero-to-one")
+git clone https://github.com/AlexGitHub0909/SpecToDelivery.git `
+  (Join-Path $skillsDir "spec-to-delivery")
 ```
 
 Update a personal installation:
 
 ```bash
-git -C "$HOME/.agents/skills/build-project-zero-to-one" pull --ff-only
+git -C "$HOME/.agents/skills/spec-to-delivery" pull --ff-only
 ```
 
 In PowerShell, use:
 
 ```powershell
-git -C (Join-Path $HOME ".agents\skills\build-project-zero-to-one") pull --ff-only
+git -C (Join-Path $HOME ".agents\skills\spec-to-delivery") pull --ff-only
 ```
 
 ### Project-shared installation
@@ -59,11 +61,11 @@ git -C (Join-Path $HOME ".agents\skills\build-project-zero-to-one") pull --ff-on
 To use the skill only in one repository, place it under that project's `.agents/skills` directory. A Git submodule keeps its version and upstream updates explicit:
 
 ```bash
-git submodule add https://github.com/AlexGitHub0909/build-project-zero-to-one.git .agents/skills/build-project-zero-to-one
+git submodule add https://github.com/AlexGitHub0909/SpecToDelivery.git .agents/skills/spec-to-delivery
 git commit -m "chore: add project delivery skill"
 ```
 
-After cloning the project on another machine, run `git submodule update --init --recursive`. To move to a newer upstream version, run `git submodule update --remote .agents/skills/build-project-zero-to-one`, review the result, and commit the updated submodule pointer.
+After cloning the project on another machine, run `git submodule update --init --recursive`. To move to a newer upstream version, run `git submodule update --remote .agents/skills/spec-to-delivery`, review the result, and commit the updated submodule pointer.
 
 If the project does not use submodules, copy the skill into the same directory and commit it with the project, without retaining a nested `.git` directory.
 
@@ -99,19 +101,19 @@ The default initializer creates the full governance baseline. Use it for a new p
 Invoke the skill with the product material or repository in scope:
 
 ```text
-Use $build-project-zero-to-one to audit this repository, recover the current plan, and implement the next piece of work with current verification evidence.
+Use $spec-to-delivery to audit this repository, recover the current plan, and implement the next piece of work with current verification evidence.
 ```
 
 For a new project:
 
 ```text
-Use $build-project-zero-to-one to turn this PRD into a greenfield project. Set up the plan, agent rules, specs, traceability, and the first working slice.
+Use $spec-to-delivery to turn this PRD into a greenfield project. Set up the plan, agent rules, specs, traceability, and the first working slice.
 ```
 
 For a spec-only handoff:
 
 ```text
-Use $build-project-zero-to-one in SPEC_ONLY mode. Produce the contracts, implementation slices, acceptance evidence, and release considerations without changing application code.
+Use $spec-to-delivery in SPEC_ONLY mode. Produce the contracts, implementation slices, acceptance evidence, and release considerations without changing application code.
 ```
 
 ## Initialize the governance files
@@ -149,7 +151,7 @@ Readiness is reported as `SPEC_READY`, `IMPLEMENTED_LOCAL`, `VERIFIED_LOCAL`, `R
 ## Skill layout
 
 ```text
-build-project-zero-to-one/
+spec-to-delivery/
 ├── SKILL.md
 ├── README.md          # Chinese, shown by default on GitHub
 ├── README.en.md       # English

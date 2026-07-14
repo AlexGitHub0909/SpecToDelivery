@@ -1,9 +1,9 @@
 ---
-name: build-project-zero-to-one
+name: spec-to-delivery
 description: Turn a product brief, PRD, requirements document, or partial software repository into a planned, traceable project with current verification evidence. Use when Codex must establish a new software project, recover and continue an existing repository, produce a spec-only handoff, establish PLAN.md and root/scoped AGENTS.md rules, implement end-to-end slices, reconcile code with approved intent, or prepare evidence-backed release and rollback work.
 ---
 
-# Move from product definition to verifiable delivery
+# SpecToDelivery
 
 Use this skill to keep approved intent, implementation evidence, and handoff state consistent inside the repository. Fit the files, stack, and checks to the project in front of you.
 
