@@ -4,7 +4,7 @@
 
 <p align="center"><strong>From product definition to verified delivery</strong></p>
 
-<p align="center">A Codex Skill that keeps product intent, execution plans, engineering rules, and verification evidence in one repository.</p>
+<p align="center">Connect the PRD, execution plan, engineering rules, implementation, and verification evidence in one delivery workflow.</p>
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-2f855a.svg?style=flat-square"></a>
@@ -17,77 +17,62 @@
   <a href="README.md">🇨🇳 中文</a> · <a href="README.en.md">🇺🇸 English</a>
 </p>
 
-The skill can establish a new project or audit an existing codebase before implementation continues. `PLAN.md` records the current execution state. The root `AGENTS.md` and any necessary scoped files define engineering rules. Approved intent stays separate from implementation evidence, so a written requirement does not pass as finished code.
+SpecToDelivery is a single Codex Skill for software project delivery. It can establish a project from product material, recover the current state of an existing repository before implementation continues, or produce an implementation-ready specification without changing code.
 
-The skill does not prescribe the project's programming language, framework, database, deployment platform, or documentation language. When a new project has no technology decision yet, it recommends one preferred approach from the product and delivery constraints. It adds one alternative only when a material trade-off exists. The user confirms choices that are expensive to reverse unless they explicitly delegate the decision. Python is used only by the helper scripts in this repository.
+It does not prescribe a programming language, framework, database, or deployment platform. It keeps existing technical choices when they are settled. When they are open, it recommends one preferred approach from the product and delivery constraints. The user still confirms decisions that are expensive to reverse unless they explicitly delegate that authority to Codex.
 
-## Installation
+## Quick start
 
-You need Git and a Codex App, CLI, or IDE Extension version that supports Skills. The current [public Codex documentation](https://developers.openai.com/codex/concepts/customization) places personal skills in `$HOME/.agents/skills` and project-shared skills in `.agents/skills` inside the repository. The commands below follow that convention.
+Install from Codex:
 
-### Personal installation
-
-A personal installation makes the skill available to all projects on the same machine.
-
-macOS or Linux:
-
-```bash
-mkdir -p "$HOME/.agents/skills"
-git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
-  "$HOME/.agents/skills/spec-to-delivery"
+```text
+Use $skill-installer to install the skill at the repository root of
+https://github.com/AlexGitHub0909/SpecToDelivery and name it spec-to-delivery.
 ```
 
-Windows PowerShell:
+Then give Codex a PRD, requirements document, or target repository:
 
-```powershell
-$skillsDir = Join-Path $HOME ".agents\skills"
-New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
-git clone https://github.com/AlexGitHub0909/SpecToDelivery.git `
-  (Join-Path $skillsDir "spec-to-delivery")
+```text
+Use $spec-to-delivery to audit the current material, establish or recover PLAN.md, the root AGENTS.md,
+and any necessary scoped AGENTS.md files,
+then implement the next piece of work with current verification evidence.
 ```
 
-Update a personal installation:
+You can also use the [manual installation](#installation-and-updates) instructions below.
 
-```bash
-git -C "$HOME/.agents/skills/spec-to-delivery" pull --ff-only
-```
+## When to use it
 
-In PowerShell, use:
-
-```powershell
-git -C (Join-Path $HOME ".agents\skills\spec-to-delivery") pull --ff-only
-```
-
-### Project-shared installation
-
-To use the skill only in one repository, place it under that project's `.agents/skills` directory. A Git submodule keeps its version and upstream updates explicit:
-
-```bash
-git submodule add https://github.com/AlexGitHub0909/SpecToDelivery.git .agents/skills/spec-to-delivery
-git commit -m "chore: add project delivery skill"
-```
-
-After cloning the project on another machine, run `git submodule update --init --recursive`. To move to a newer upstream version, run `git submodule update --remote .agents/skills/spec-to-delivery`, review the result, and commit the updated submodule pointer.
-
-If the project does not use submodules, copy the skill into the same directory and commit it with the project, without retaining a nested `.git` directory.
-
-Some installed versions and built-in tools still use `$CODEX_HOME/skills`, usually `~/.codex/skills` when `CODEX_HOME` is unset. If Codex already detects an existing installation, do not install a duplicate. Codex normally detects skill changes automatically; restart Codex if the skill does not appear.
-
-The repository is self-contained. It does not require an MCP server or a separate plugin.
-
-## Choose a working mode
-
-| Your situation | Mode | What the skill does first |
+| Current situation | Mode | First action |
 |---|---|---|
-| You have a PRD or requirements but little or no code | `GREENFIELD` | Establish the plan, scoped rules, specifications, and traceability before completing the first verifiable slice |
+| You have a PRD or requirements but little or no code | `GREENFIELD` | Establish the plan, engineering rules, specifications, and traceability before completing the first verifiable slice |
 | Code and project documents already exist | `BROWNFIELD` | Audit Git, plans, documents, code, and tests before acting on confirmed gaps |
-| You only need specifications and handoff material | `SPEC_ONLY` | Produce contracts, implementation slices, and acceptance evidence without changing application code |
+| You only need specifications and handoff material | `SPEC_ONLY` | Produce implementation-ready contracts, work slices, and acceptance evidence without changing application code |
+
+## How it works
+
+| Stage | What happens | Primary record |
+|---|---|---|
+| Recover facts | Inspect Git, existing rules, plans, documents, code, and tests | Current repository evidence |
+| Confirm scope | Choose the project mode and determine which engineering work areas apply | `PLAN.md` |
+| Establish constraints | Record the active task, directory ownership, validation commands, and prohibited actions | Root and scoped `AGENTS.md` files |
+| Specify and implement | Split requirements into observable, testable end-to-end slices | Product specs, flow specs, traceability, and code |
+| Verify and hand off | Run current checks and update facts, status, rollback, and the next task | `PLAN.md`, test evidence, and `CHANGELOG.md` |
+
+Each cycle advances one active slice. Finishing a slice does not mean the project is complete, and passing tests does not prove deployment.
+
+## Core rules
+
+- Keep `PLAN.md` as the current execution record. Update it when the task, result, evidence, blocker, or next step changes.
+- Give every project a root `AGENTS.md`. Add a scoped file when a directory has its own stack, application boundary, data boundary, validation commands, or release process.
+- Keep intended product behavior separate from implementation facts. Contracts define the target; code, Git, tests, and runtime results show the current implementation.
+- Reuse the repository's existing structure, dependencies, components, services, and documents before adding another abstraction or a parallel fact source.
+- Do not deploy, write to external systems, buy services, use real credentials, or make destructive data changes without clear authority.
 
 ## Load engineering rules on demand
 
-The skill first infers the needed work areas from product material and repository evidence. It asks the user only when the evidence is insufficient and the answer would change scope, architecture, data ownership, release responsibility, or acceptance. It groups no more than three related questions at a time.
+The skill infers needed work areas from product material and repository evidence. It asks the user only when the evidence is insufficient and the answer would change scope, architecture, data ownership, release responsibility, or acceptance. When confirmation is needed, it groups no more than three related questions and uses product language instead of presenting unexplained technology choices.
 
-| Work area | Load its rules when the project needs |
+| Work area | Use it for |
 |---|---|
 | Website | Public pages, content distribution, search discovery, campaigns, documentation, or public forms |
 | Frontend | Interactive web, mobile, or desktop interfaces and user flows |
@@ -96,100 +81,136 @@ The skill first infers the needed work areas from product material and repositor
 | Database | Durable business state, accounts, history, reporting, search, or audit data |
 | Operations | Deployment, environments, domains, background runtime, monitoring, release, or recovery ownership |
 
-These six areas are not exhaustive. A library, CLI, data pipeline, model, embedded system, or another distinct responsibility can use a project-specific work area instead of being forced into the nearest category.
+These six areas are not a fixed architecture. A library, CLI, data pipeline, model, embedded system, or another distinct responsibility can use a project-specific work area. A work area is not a directory: one directory may serve several areas, and one area may span several directories.
 
-A work area is not a fixed directory. One directory may serve several areas, and one area may span several directories. The result is recorded in `PLAN.md` as `APPLIES`, `NOT_APPLICABLE`, `DEFERRED`, or `OPEN_DECISION`. The skill loads rules only for areas that apply or need a decision.
+## Other prompts
 
-## Project governance
-
-The supplied templates cover:
-
-- project entry and local setup;
-- root and scoped agent rules;
-- on-demand work-area discovery and rule routing;
-- current planning and change history;
-- document routing and ownership;
-- product scope, behavior, and system flows;
-- requirement-to-code traceability;
-- test and release evidence;
-- architecture decisions and rollback.
-
-The initializer creates a standard governance file skeleton. It does not decide the project's work areas or fill in owners, commands, and acceptance evidence. Use it for a new project, or for an existing repository that has deliberately adopted this layout, then replace the starter content with confirmed project facts. Otherwise, adapt the needed content to the repository's canonical files instead of creating a second documentation system.
-
-## Use it
-
-Invoke the skill with the product material or repository in scope:
+Start from product material:
 
 ```text
-Use $spec-to-delivery to audit this repository, recover the current plan, and implement the next piece of work with current verification evidence.
+Use $spec-to-delivery to turn this PRD into a GREENFIELD project.
+Infer the applicable engineering work areas and ask only about unresolved choices that change scope or architecture.
+Then establish PLAN, scoped AGENTS, specifications, and traceability before completing the first working slice.
 ```
 
-For a new project:
+Prepare a specification-only handoff:
 
 ```text
-Use $spec-to-delivery to turn this PRD into a greenfield project. Infer which website, frontend, backend, API, database, and operations work areas apply from the product material, and ask me only about unresolved choices that would change scope or architecture. Then set up the plan, scoped agent rules, specs, traceability, and the first working slice.
+Use $spec-to-delivery in SPEC_ONLY mode.
+Produce product contracts, implementation slices, acceptance evidence, and release considerations without changing application code.
 ```
 
-For a spec-only handoff:
+## Installation and updates
 
-```text
-Use $spec-to-delivery in SPEC_ONLY mode. Produce the contracts, implementation slices, acceptance evidence, and release considerations without changing application code.
+The [Codex Skills documentation](https://learn.chatgpt.com/docs/build-skills) uses `$HOME/.agents/skills` for personal skills and `.agents/skills` inside a repository for shared skills. If your Codex installation already discovers this skill from another supported location, do not install a duplicate.
+
+<details>
+<summary>Personal installation on macOS or Linux</summary>
+
+```bash
+mkdir -p "$HOME/.agents/skills"
+git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
+  "$HOME/.agents/skills/spec-to-delivery"
 ```
 
-## Initialize the governance files
+Update:
 
-The initializer copies missing templates and leaves existing files alone:
+```bash
+git -C "$HOME/.agents/skills/spec-to-delivery" pull --ff-only
+```
+
+</details>
+
+<details>
+<summary>Personal installation on Windows PowerShell</summary>
+
+```powershell
+$skillsDir = Join-Path $HOME ".agents\skills"
+New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
+git clone https://github.com/AlexGitHub0909/SpecToDelivery.git `
+  (Join-Path $skillsDir "spec-to-delivery")
+```
+
+Update:
+
+```powershell
+git -C (Join-Path $HOME ".agents\skills\spec-to-delivery") pull --ff-only
+```
+
+</details>
+
+<details>
+<summary>Project-shared installation</summary>
+
+Add the skill to a project as a Git submodule:
+
+```bash
+git submodule add https://github.com/AlexGitHub0909/SpecToDelivery.git \
+  .agents/skills/spec-to-delivery
+git commit -m "chore: add project delivery skill"
+```
+
+After cloning the project, collaborators run:
+
+```bash
+git submodule update --init --recursive
+```
+
+You may copy the skill instead, but do not keep a nested `.git` directory.
+
+</details>
+
+For personal or repository use, this skill does not require an MCP server or a separate plugin. Restart Codex if the skill does not appear after installation.
+
+## Initialization and audit scripts
+
+The helper scripts use only the Python standard library. They do not constrain the application project's language or stack.
+
+Preview the files that would be created:
 
 ```bash
 python3 scripts/init_project.py /path/to/project \
   --name "Project name" \
-  --mode greenfield
+  --mode greenfield \
+  --dry-run
 ```
 
-Add repeatable `--scoped path/to/directory` arguments only when real directory-level rule boundaries exist. They do not imply a fixed frontend and backend layout.
+Add `--scoped path/to/directory` only when the directory has a real local engineering boundary. The initializer creates missing files and leaves existing files unchanged.
 
-Preview the changes first:
-
-```bash
-python3 scripts/init_project.py /path/to/project --name "Project name" --dry-run
-```
-
-Audit the result:
+Audit the initialized layout:
 
 ```bash
 python3 scripts/audit_project.py /path/to/project
 ```
 
-Warnings are expected immediately after initialization because the starter content is not a finished handoff. Before handoff, use strict mode; empty work-area routes, untouched starter text, and key empty tables become errors:
+Before handoff, run the strict audit:
 
 ```bash
 python3 scripts/audit_project.py /path/to/project --strict
 ```
 
-Strict mode catches structural gaps and obvious unfinished starter content. It does not prove that the decisions are correct or the software works. These scripts check the standard layout supplied by this skill. Do not use missing standard filenames as proof that an older repository lacks equivalent governance. Its own `AGENTS.md`, test standards, and release runbook still decide which stack-specific commands to run.
+Initialization creates a file skeleton, not finished project documentation. Strict mode catches structural gaps, obvious unfinished starter content, and key empty tables. It does not replace product review, code tests, or runtime verification.
 
-## Boundaries
+## Readiness and boundaries
 
-The skill does not treat a test pass as proof of deployment. It does not turn product text into an implementation claim, and it does not write to production or external systems without clear authority.
+The skill reports `SPEC_READY`, `IMPLEMENTED_LOCAL`, `VERIFIED_LOCAL`, `RELEASE_READY`, `DEPLOYED_VERIFIED`, or `BLOCKED_EXTERNAL` according to the evidence currently available.
 
-Readiness is reported as `SPEC_READY`, `IMPLEMENTED_LOCAL`, `VERIFIED_LOCAL`, `RELEASE_READY`, `DEPLOYED_VERIFIED`, or `BLOCKED_EXTERNAL`.
+Product documents do not prove that code exists, and local tests do not prove that production works. Every completion claim needs current evidence. Checks that were not run, steps that need manual confirmation, external blockers, and prohibited actions remain visible in the plan and handoff.
 
-## Skill layout
+## Repository layout
 
 ```text
 spec-to-delivery/
-├── SKILL.md
-├── README.md          # Chinese, shown by default on GitHub
-├── README.en.md       # English
-├── LICENSE            # MIT
-├── agents/
-├── references/        # Core rules and on-demand work-area rules
-├── scripts/
-├── tests/             # Regression tests for the helper scripts
-└── assets/templates/project/
+├── SKILL.md                 # Codex execution rules
+├── README.md                # Chinese, shown by default on GitHub
+├── README.en.md             # English
+├── agents/openai.yaml       # Skill list metadata
+├── references/              # Core rules and on-demand work-area rules
+├── assets/templates/project # Project governance templates
+├── scripts/                 # Initialization and audit helpers
+├── tests/                   # Script regression tests
+└── LICENSE                  # MIT
 ```
-
-Codex follows `SKILL.md`. The two README files are for people who want to understand or maintain the skill.
 
 ## License
 

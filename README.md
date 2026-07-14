@@ -4,7 +4,7 @@
 
 <p align="center"><strong>从产品定义到可验证交付</strong></p>
 
-<p align="center">把产品定义、执行计划、工程规则和验证证据维护在同一个仓库里的 Codex Skill。</p>
+<p align="center">把 PRD、执行计划、工程规则、项目实施和验证证据串成一条交付链。</p>
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-2f855a.svg?style=flat-square"></a>
@@ -17,19 +17,95 @@
   <a href="README.md">🇨🇳 中文</a> · <a href="README.en.md">🇺🇸 English</a>
 </p>
 
-这个 Skill 可以建立新项目，也可以先审计已有代码库再继续实施。`PLAN.md` 记录当前执行状态，根 `AGENTS.md` 和必要的子目录 `AGENTS.md` 约束工程行为。产品目标与当前实现分开记录，文档里写了某项能力，不代表代码已经完成。
+SpecToDelivery 是一个用于软件项目交付的单一 Codex Skill。它可以从产品文档建立新项目，也可以先恢复已有仓库的真实状态再接着实施；如果当前只需要规格和交接材料，它只产出可实施的规格，不修改代码。
 
-Skill 不限定项目的编程语言、框架、数据库、部署平台或文档语言。新项目尚未确定技术方案时，它会根据产品与交付约束推荐一个首选方案，并在确有取舍时给出一个备选。难以回退的选择由用户确认，除非用户明确授权代为决定。仓库里的 Python 只用于辅助脚本。
+它不预设编程语言、框架、数据库或部署平台。技术方案已经确定时沿用现有选择；尚未确定时，根据产品和交付约束给出一个首选建议。难以回退的决定仍由用户确认，除非用户明确授权 Codex 代为决定。
 
-## 安装
+## 快速开始
 
-需要本机已经安装 Git，并使用支持 Skills 的 Codex App、CLI 或 IDE Extension。当前 [Codex 公开文档](https://developers.openai.com/codex/concepts/customization) 将个人 Skill 放在 `$HOME/.agents/skills`，项目共享 Skill 放在仓库的 `.agents/skills`。下面的命令采用这套路径。
+在 Codex 中安装：
 
-### 个人安装
+```text
+使用 $skill-installer 安装 https://github.com/AlexGitHub0909/SpecToDelivery
+仓库根目录的 Skill，名称设为 spec-to-delivery。
+```
 
-个人安装会让这个 Skill 在本机所有项目中可用。
+安装后，把 PRD、需求文档或目标仓库交给 Codex：
 
-macOS 或 Linux：
+```text
+使用 $spec-to-delivery 审计当前材料，建立或恢复 PLAN.md、根级 AGENTS.md
+和必要的子目录 AGENTS.md，
+然后实施下一项有完整验证证据的工作。
+```
+
+也可以按下面的方式[手动安装](#安装与更新)。
+
+## 适用场景
+
+| 当前情况 | 模式 | 先做什么 |
+|---|---|---|
+| 已有 PRD 或需求材料，代码很少或还没有代码 | `GREENFIELD` | 建立计划、工程规则、规格和追溯关系，再完成第一个可验证切片 |
+| 已有代码和项目文档 | `BROWNFIELD` | 审计 Git、计划、文档、代码与测试，确认真实缺口后继续实施 |
+| 只需要规格和交接材料 | `SPEC_ONLY` | 输出可实施的契约、任务切片和验收依据，不修改应用代码 |
+
+## 工作方式
+
+| 阶段 | 处理内容 | 主要记录位置 |
+|---|---|---|
+| 恢复事实 | 检查 Git、现有规则、计划、文档、代码和测试 | 当前仓库证据 |
+| 确认范围 | 选择工作模式，判断哪些工程工作区适用 | `PLAN.md` |
+| 建立约束 | 写明当前任务、目录责任、验证命令和禁止事项 | 根级与子目录 `AGENTS.md` |
+| 规格与实施 | 把需求拆成可观察、可测试的端到端切片 | 产品规格、流程规格、追溯矩阵和代码 |
+| 验证与交接 | 运行当前检查，更新事实、状态、回滚和下一步 | `PLAN.md`、测试证据、`CHANGELOG.md` |
+
+一轮工作只推进一个当前切片。切片完成不等于项目完成；测试通过也不等于已经上线。
+
+## 核心规则
+
+- `PLAN.md` 是当前执行记录，必须保留。任务、结果、证据、阻塞或下一步变化时，随实施一起更新。
+- 每个项目都有根 `AGENTS.md`。目录出现独立技术栈、应用边界、数据边界、验证命令或发布流程时，再增加就近的子目录 `AGENTS.md`。
+- 产品和契约描述目标行为；代码、Git、测试和运行结果证明当前实现。两类事实不能混写。
+- 优先复用仓库已有的结构、依赖、组件、服务和文档，不为套用模板另建一套平行事实源。
+- 没有明确授权时，不执行部署、外部系统写入、付费操作、真实凭证使用或破坏性数据变更。
+
+## 按需加载工程规则
+
+Skill 先根据产品材料和仓库证据判断需要哪些工作区。只有证据不足，而且答案会改变范围、架构、数据责任、发布责任或验收方式时，才向用户提问。需要确认时，一次最多集中三个相关问题，并使用产品语言，不把没有解释的技术选项直接丢给用户。
+
+| 工作区 | 适用情况 |
+|---|---|
+| 官网 | 公开页面、内容传播、搜索发现、营销活动、文档站或公开表单 |
+| 前端 | Web、移动端或桌面端的交互界面与用户流程 |
+| 后端 | 服务端业务规则、认证、任务、队列或私有集成 |
+| API | 客户端、合作方、自动化或系统之间的稳定程序接口 |
+| 数据库 | 持久化业务状态、账户、历史、报表、搜索或审计数据 |
+| 运维 | 部署、环境、域名、后台任务、监控、发布或恢复责任 |
+
+这六类不是固定架构。库、CLI、数据管道、模型、嵌入式系统或其他独立责任可以增加项目专用工作区。工作区也不等于目录：一个目录可以承载多个工作区，一个工作区也可以跨多个目录。
+
+## 其他调用方式
+
+从产品文档建立项目：
+
+```text
+使用 $spec-to-delivery 把这份 PRD 建成一个 GREENFIELD 项目。
+先判断适用的工程工作区，只确认仍会改变范围或架构的问题；
+再建立 PLAN、分层 AGENTS、规格和追溯关系，完成第一个可运行切片。
+```
+
+只做规格交接：
+
+```text
+使用 $spec-to-delivery 的 SPEC_ONLY 模式。
+输出产品契约、实施切片、验收证据和发布注意事项，不修改应用代码。
+```
+
+## 安装与更新
+
+[Codex Skills 文档](https://learn.chatgpt.com/docs/build-skills)使用 `$HOME/.agents/skills` 存放个人 Skill，项目共享 Skill 放在仓库的 `.agents/skills`。如果现有 Codex 已经能识别其他目录中的安装，不必重复安装。
+
+<details>
+<summary>macOS / Linux 个人安装</summary>
 
 ```bash
 mkdir -p "$HOME/.agents/skills"
@@ -37,7 +113,16 @@ git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
   "$HOME/.agents/skills/spec-to-delivery"
 ```
 
-Windows PowerShell：
+更新：
+
+```bash
+git -C "$HOME/.agents/skills/spec-to-delivery" pull --ff-only
+```
+
+</details>
+
+<details>
+<summary>Windows PowerShell 个人安装</summary>
 
 ```powershell
 $skillsDir = Join-Path $HOME ".agents\skills"
@@ -46,151 +131,87 @@ git clone https://github.com/AlexGitHub0909/SpecToDelivery.git `
   (Join-Path $skillsDir "spec-to-delivery")
 ```
 
-更新个人安装：
-
-```bash
-git -C "$HOME/.agents/skills/spec-to-delivery" pull --ff-only
-```
-
-PowerShell 中可使用：
+更新：
 
 ```powershell
 git -C (Join-Path $HOME ".agents\skills\spec-to-delivery") pull --ff-only
 ```
 
-### 项目共享安装
+</details>
 
-如果只想让一个仓库使用这个 Skill，可以把它放在项目的 `.agents/skills`。使用 Git Submodule 能保留独立版本和上游更新记录：
+<details>
+<summary>项目共享安装</summary>
+
+把 Skill 作为 Submodule 放进项目仓库：
 
 ```bash
-git submodule add https://github.com/AlexGitHub0909/SpecToDelivery.git .agents/skills/spec-to-delivery
+git submodule add https://github.com/AlexGitHub0909/SpecToDelivery.git \
+  .agents/skills/spec-to-delivery
 git commit -m "chore: add project delivery skill"
 ```
 
-其他协作者克隆项目后，需要运行 `git submodule update --init --recursive`。更新到上游版本时，运行 `git submodule update --remote .agents/skills/spec-to-delivery`，检查结果后提交新的 Submodule 指针。
+协作者克隆项目后运行：
 
-不使用 Submodule 时，也可以把 Skill 内容复制到同一目录并随项目提交，但不要保留嵌套的 `.git` 目录。
-
-部分已安装版本和内置工具仍使用 `$CODEX_HOME/skills`，未设置 `CODEX_HOME` 时通常是 `~/.codex/skills`。如果现有安装已经能被识别，不必重复安装。Codex 通常会自动发现 Skill，未出现时重启 Codex。
-
-这个仓库可以独立使用，不依赖 MCP Server，也不需要额外安装 Plugin。
-
-## 选择工作模式
-
-| 你的情况 | 模式 | Skill 会先做什么 |
-|---|---|---|
-| 已有 PRD 或需求材料，代码很少或还没有代码 | `GREENFIELD` | 建立计划、分层规则、规格和追溯关系，再完成第一个可验证切片 |
-| 已有代码和项目文档 | `BROWNFIELD` | 审计 Git、计划、文档、代码与测试，确认真实缺口后继续实施 |
-| 只需要规格和交接材料 | `SPEC_ONLY` | 输出契约、实施切片和验收依据，不修改应用代码 |
-
-## 按需加载工程规则
-
-Skill 先从产品材料和仓库判断项目需要哪些工作区。只有证据不足，而且答案会改变范围、架构、数据责任、发布责任或验收方式时，才向用户提问；一次最多集中确认三个相关问题。
-
-| 工作区 | 何时加载规则 |
-|---|---|
-| 官网 | 需要公开页面、内容传播、搜索发现、营销活动、文档站或公开表单 |
-| 前端 | 需要网页、移动端或桌面端的交互界面与用户流程 |
-| 后端 | 需要服务端业务规则、认证、任务、队列或私有集成 |
-| API | 需要客户端、合作方、自动化或系统之间的稳定程序接口 |
-| 数据库 | 需要持久化业务状态、账户、历史、报表、搜索或审计数据 |
-| 运维 | 需要部署、环境、域名、后台任务、监控、发布或恢复责任 |
-
-这六类不是穷举。库、CLI、数据管道、模型、嵌入式系统或其他独立责任可以增加项目专用工作区，不必硬塞进现有分类。
-
-工作区不等于固定目录。一个目录可以同时承载多个工作区，一个工作区也可以跨多个目录。确认结果记录在 `PLAN.md`，使用 `APPLIES`、`NOT_APPLICABLE`、`DEFERRED` 或 `OPEN_DECISION`；Skill 只加载当前适用或需要作出决定的规则。
-
-## 项目治理内容
-
-模板覆盖以下内容：
-
-- 项目入口和本地启动说明；
-- 根级与子目录执行规则；
-- 按需工作区识别和规则路由；
-- 当前计划和能力变更记录；
-- 文档路由、职责和更新时间；
-- 产品范围、行为与系统流程；
-- 需求、代码和测试之间的追溯关系；
-- 测试、发布和回滚证据；
-- 重大架构决策。
-
-默认初始化脚本只建立标准治理文件骨架，不会替项目判断工作区，也不会自动填入负责人、命令和验收依据。它适合新项目，也适合明确决定采用这套目录的已有项目。初始化后必须根据确认过的范围补全内容；其他老仓库应把所需内容合并到现有事实源，不能再创建一套平行文档。
-
-## 使用方式
-
-把产品材料或目标仓库交给 Codex，并明确调用 Skill：
-
-```text
-使用 $spec-to-delivery 审计这个仓库，恢复当前计划，然后实施下一项有完整验证证据的工作。
+```bash
+git submodule update --init --recursive
 ```
 
-创建新项目：
+也可以直接复制 Skill 内容，但不要保留嵌套的 `.git` 目录。
 
-```text
-使用 $spec-to-delivery 把这份 PRD 建成一个 GREENFIELD 项目。先根据产品材料判断官网、前端、后端、API、数据库和运维中哪些工作区适用，只向我确认仍会改变范围或架构的问题；然后建立 PLAN、分层 AGENTS、规格和追溯关系，再完成第一个可运行、可验证的实施切片。
-```
+</details>
 
-只做规格交接：
+作为个人或项目内 Skill 使用时，本仓库不依赖 MCP Server，也不要求额外安装 Plugin。Codex 未发现 Skill 时，重启 Codex 后再检查。
 
-```text
-使用 $spec-to-delivery 的 SPEC_ONLY 模式。输出产品契约、实施切片、验收证据和发布注意事项，不修改应用代码。
-```
+## 初始化与审计脚本
 
-## 初始化治理文件
+辅助脚本只使用 Python 标准库，不限制应用项目的语言和技术栈。
 
-初始化脚本只复制缺失文件，不覆盖仓库里已有的内容：
+先预览将创建的文件：
 
 ```bash
 python3 scripts/init_project.py /path/to/project \
   --name "项目名称" \
-  --mode greenfield
+  --mode greenfield \
+  --dry-run
 ```
 
-只有目录确实存在独立工程边界时，才按实际路径追加可重复的 `--scoped path/to/directory`，它不是固定的前后端目录结构。
+只有目录确实存在独立工程边界时，才追加 `--scoped path/to/directory`。脚本只创建缺失文件，不覆盖已有内容。
 
-不确定会新增哪些文件时，先预览：
-
-```bash
-python3 scripts/init_project.py /path/to/project --name "项目名称" --dry-run
-```
-
-完成后运行治理审计：
+初始化完成后运行：
 
 ```bash
 python3 scripts/audit_project.py /path/to/project
 ```
 
-刚初始化、尚未补全的文件会得到警告，这是预期结果。准备移交时使用严格模式；未填写的工作区、模板说明和关键空表会被视为错误：
+准备移交时运行严格审计：
 
 ```bash
 python3 scripts/audit_project.py /path/to/project --strict
 ```
 
-严格模式只能发现结构缺失和明显未填写的模板内容，不能证明决定正确或软件已经可用。这两个脚本只检查本 Skill 提供的标准目录。老仓库缺少这些固定文件名，不代表它没有等价的治理文档。技术栈相关命令仍以项目自己的 `AGENTS.md`、测试标准和发布手册为准。
+初始化得到的是文件骨架，不是完成后的项目文档。严格审计只能发现结构缺失、明显未填写的模板内容和关键空表，不能代替业务评审、代码测试或运行验证。
 
-## 边界
+## 项目状态与边界
 
-测试通过不等于已经上线，产品文档也不能直接证明代码已经实现。没有明确授权时，Skill 不会执行生产写入、外部系统写入、付费操作或破坏性数据变更。
+Skill 使用 `SPEC_READY`、`IMPLEMENTED_LOCAL`、`VERIFIED_LOCAL`、`RELEASE_READY`、`DEPLOYED_VERIFIED` 和 `BLOCKED_EXTERNAL` 表示当前证据能够支持到哪一步。
 
-项目状态使用以下等级：`SPEC_READY`、`IMPLEMENTED_LOCAL`、`VERIFIED_LOCAL`、`RELEASE_READY`、`DEPLOYED_VERIFIED`、`BLOCKED_EXTERNAL`。
+产品文档不能直接证明代码已经实现，本地测试也不能证明生产环境已经可用。所有完成声明都需要当前证据；未运行的检查、需要人工确认的步骤、外部阻塞和禁止事项会继续保留在计划与交接结果中。
 
-## Skill 目录
+## 仓库结构
 
 ```text
 spec-to-delivery/
-├── SKILL.md
-├── README.md          # 中文，GitHub 默认展示
-├── README.en.md       # English
-├── LICENSE            # MIT
-├── agents/
-├── references/        # 核心规则与按需工作区规则
-├── scripts/
-├── tests/             # 初始化与审计脚本的回归测试
-└── assets/templates/project/
+├── SKILL.md                 # Codex 执行规则
+├── README.md                # 中文说明，GitHub 默认展示
+├── README.en.md             # English
+├── agents/openai.yaml       # Skill 列表元数据
+├── references/              # 核心规则与按需工作区规则
+├── assets/templates/project # 项目治理模板
+├── scripts/                 # 初始化与审计脚本
+├── tests/                   # 脚本回归测试
+└── LICENSE                  # MIT
 ```
-
-Codex 执行时读取 `SKILL.md`。中英文 README 是给使用者和维护者看的说明。
 
 ## 许可证
 
-本项目采用 [MIT License](LICENSE)。你可以使用、复制、修改和分发，但必须保留原版权及许可证声明。本项目不提供任何担保。
+本项目采用 [MIT License](LICENSE)。可以使用、复制、修改和分发，但必须保留原版权及许可证声明。本项目不提供任何担保。
