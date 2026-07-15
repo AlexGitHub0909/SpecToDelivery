@@ -9,7 +9,6 @@
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-2f855a.svg?style=flat-square"></a>
   <img alt="Open Agent Skill" src="https://img.shields.io/badge/Agent-Skill-2563eb.svg?style=flat-square">
-  <img alt="Compatible agents: 7" src="https://img.shields.io/badge/compatible_agents-7-0f766e.svg?style=flat-square">
   <img alt="Workflow: PLAN and AGENTS" src="https://img.shields.io/badge/workflow-PLAN%20%2B%20AGENTS-7c3aed.svg?style=flat-square">
   <img alt="Helper scripts: Python standard library only" src="https://img.shields.io/badge/helpers-Python%20stdlib-3776ab.svg?style=flat-square&amp;logo=python&amp;logoColor=white">
 </p>
@@ -120,21 +119,19 @@ Produce product contracts, implementation slices, acceptance evidence, and relea
 
 ## Compatibility
 
-This repository maintains one platform-neutral `SKILL.md` together with shared references, templates, and scripts. Platform-specific files remain optional adapters. For example, `agents/openai.yaml` supplies UI metadata for OpenAI products and can be ignored elsewhere.
+SpecToDelivery follows the open Agent Skills specification. Every platform uses the same `SKILL.md`, references, templates, and scripts. `agents/openai.yaml` only supplies UI metadata for OpenAI products; other platforms ignore it.
 
-| Platform | Official discovery or import path | Current status |
-|---|---|---|
-| [Codex](https://learn.chatgpt.com/docs/build-skills) | `~/.agents/skills`, project `.agents/skills` | Primary development and validation environment |
-| [Claude Code](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) | `~/.claude/skills`, project `.claude/skills` | Standard and structure compatible; platform end-to-end validation pending |
-| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) | `~/.agents/skills`, `~/.copilot/skills`; project `.agents/skills`, `.github/skills`, or `.claude/skills` | Standard and structure compatible; platform end-to-end validation pending |
-| [Cursor](https://cursor.com/docs/skills) | `~/.agents/skills`, `~/.cursor/skills`; project `.agents/skills` or `.cursor/skills` | Standard and structure compatible; platform end-to-end validation pending |
-| [Gemini CLI](https://geminicli.com/docs/cli/using-agent-skills/) | `~/.agents/skills`, `~/.gemini/skills`; project `.agents/skills` or `.gemini/skills` | Standard and structure compatible; platform end-to-end validation pending |
-| [OpenCode](https://opencode.ai/docs/skills) | `~/.agents/skills`, `~/.config/opencode/skills`; project `.agents/skills`, `.opencode/skills`, or `.claude/skills` | Standard and structure compatible; platform end-to-end validation pending |
-| [TRAE](https://www.trae.ai/blog/trae_tutorial_0115) | [TRAE IDE 3.5.44+](https://www.trae.ai/ja/changelog) can use project `.agents/skills`; UI import is also available under Settings → Rule & Skills → Skills | Standard and structure compatible; platform end-to-end validation pending |
+| Platform | Official discovery or import path |
+|---|---|
+| [Codex](https://learn.chatgpt.com/docs/build-skills) | `~/.agents/skills`, project `.agents/skills` |
+| [Claude Code](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) | `~/.claude/skills`, project `.claude/skills` |
+| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) | `~/.agents/skills`, `~/.copilot/skills`; project `.agents/skills`, `.github/skills`, or `.claude/skills` |
+| [Cursor](https://cursor.com/docs/skills) | `~/.agents/skills`, `~/.cursor/skills`; project `.agents/skills` or `.cursor/skills` |
+| [Gemini CLI](https://geminicli.com/docs/cli/using-agent-skills/) | `~/.agents/skills`, `~/.gemini/skills`; project `.agents/skills` or `.gemini/skills` |
+| [OpenCode](https://opencode.ai/docs/skills) | `~/.agents/skills`, `~/.config/opencode/skills`; project `.agents/skills`, `.opencode/skills`, or `.claude/skills` |
+| [TRAE](https://www.trae.ai/blog/trae_tutorial_0115) | [TRAE IDE 3.5.44+](https://www.trae.ai/ja/changelog) can use project `.agents/skills`; UI import is also available under Settings → Rule & Skills → Skills |
 
-Here, “compatible” means the platform officially supports `SKILL.md` and the repository does not bind its core workflow to a proprietary agent feature. It does not mean every version, permission set, and runtime behaves identically. A platform is only marked end-to-end validated after installation discovery, triggering, reference loading, script execution, `PLAN.md` updates, root and scoped `AGENTS.md` loading, and a complete handoff flow have all been exercised there.
-
-When platform capabilities differ, the Skill adapts the execution path without lowering the requested outcome, acceptance criteria, safety boundary, or evidence standard. It works sequentially without subagents and manages governance files directly when Python 3 is unavailable. Without browser, network, MCP, or external access, it proceeds only when another method can produce equivalent evidence; otherwise the item remains `MANUAL_REQUIRED` or `BLOCKED_EXTERNAL`. Missing tools never justify replacing evidence with a written claim.
+The Skill can be loaded through the paths above. Available shell, browser, network, MCP, subagent, and external-system capabilities depend on the product version and workspace policy. SpecToDelivery adjusts its execution path to the available environment without lowering the requested outcome, acceptance criteria, safety boundary, or evidence standard. It uses an alternative method when that method produces equivalent evidence; otherwise the item remains `MANUAL_REQUIRED` or `BLOCKED_EXTERNAL`.
 
 ## Installation and updates
 

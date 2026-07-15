@@ -137,6 +137,9 @@ class ProjectScriptTests(unittest.TestCase):
             content = readme.read_text(encoding="utf-8")
             for platform in platforms:
                 self.assertIn(platform, content, f"{platform} missing from {readme.name}")
+            self.assertNotIn("待平台端到端验证", content)
+            self.assertNotIn("platform end-to-end validation pending", content)
+            self.assertNotIn("Compatible agents: 7", content)
 
     def test_initializer_includes_lean_project_controls(self) -> None:
         plan = (self.project / "PLAN.md").read_text(encoding="utf-8")
