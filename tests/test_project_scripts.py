@@ -141,6 +141,17 @@ class ProjectScriptTests(unittest.TestCase):
             self.assertNotIn("platform end-to-end validation pending", content)
             self.assertNotIn("Compatible agents: 7", content)
 
+    def test_readmes_present_direct_download_before_git(self) -> None:
+        archive_url = (
+            "https://github.com/AlexGitHub0909/SpecToDelivery/"
+            "archive/refs/heads/main.zip"
+        )
+        for readme in README_FILES:
+            content = readme.read_text(encoding="utf-8")
+            self.assertIn(archive_url, content)
+            self.assertIn("git clone", content)
+            self.assertLess(content.index(archive_url), content.index("git clone"))
+
     def test_initializer_includes_lean_project_controls(self) -> None:
         plan = (self.project / "PLAN.md").read_text(encoding="utf-8")
         product_spec = (

@@ -23,15 +23,11 @@ SpecToDelivery 是一个基于开放 [Agent Skills 规范](https://agentskills.i
 
 ## 快速开始
 
-多数支持开放 Agent Skills 的工具可以从 `.agents/skills` 加载：
+1. [下载最新版 ZIP](https://github.com/AlexGitHub0909/SpecToDelivery/archive/refs/heads/main.zip)。
+2. 解压后，把文件夹从 `SpecToDelivery-main` 重命名为 `spec-to-delivery`。
+3. 将文件夹放进平台支持的 Skill 目录。多数工具使用 `~/.agents/skills/spec-to-delivery`，Claude Code 使用 `~/.claude/skills/spec-to-delivery`。
 
-```bash
-mkdir -p "$HOME/.agents/skills"
-git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
-  "$HOME/.agents/skills/spec-to-delivery"
-```
-
-Claude Code 使用 `~/.claude/skills`；其他平台入口见[兼容性](#兼容性)和[安装与更新](#安装与更新)。安装后，把 PRD、需求文档或目标仓库交给当前 Agent：
+其他平台入口见[兼容性](#兼容性)和[安装与更新](#安装与更新)。安装后，把 PRD、需求文档或目标仓库交给当前 Agent：
 
 ```text
 使用 spec-to-delivery 审计当前材料，建立或恢复 PLAN.md、根级 AGENTS.md
@@ -137,71 +133,33 @@ SpecToDelivery 遵循开放的 Agent Skills 规范。所有平台共用同一套
 
 优先使用平台官方支持的 Skill 目录。`.agents/skills` 可以被 Codex、GitHub Copilot、Cursor、Gemini CLI、OpenCode 和 TRAE IDE 3.5.44+ 识别，适合作为跨工具共享位置。Claude Code 使用 `.claude/skills`。不要在多个可发现目录重复安装同名 Skill。
 
+### 直接下载（推荐）
+
+[下载最新版 ZIP](https://github.com/AlexGitHub0909/SpecToDelivery/archive/refs/heads/main.zip)，解压并将文件夹重命名为 `spec-to-delivery`，再移动到对应位置：
+
+| 使用方式 | 目标目录 |
+|---|---|
+| 多工具个人安装 | `~/.agents/skills/spec-to-delivery` |
+| Claude Code 个人安装 | `~/.claude/skills/spec-to-delivery` |
+| 项目内共享 | `<项目根目录>/.agents/skills/spec-to-delivery` |
+
+项目只使用 Claude Code 时，可将项目内目录改为 `.claude/skills/spec-to-delivery`；只使用 Cursor 时也可放在 `.cursor/skills/spec-to-delivery`。更新时重新下载 ZIP 并替换旧目录。如果曾修改本 Skill，替换前先保留自己的改动。
+
 Codex 用户也可以让 `$skill-installer` 从 `https://github.com/AlexGitHub0909/SpecToDelivery` 的仓库根目录安装，并把 Skill 名称设为 `spec-to-delivery`。
 
 <details>
-<summary>macOS / Linux 个人安装</summary>
+<summary>使用 Git 安装和更新</summary>
+
+Git 适合需要频繁更新或参与维护的用户：
 
 ```bash
 mkdir -p "$HOME/.agents/skills"
 git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
   "$HOME/.agents/skills/spec-to-delivery"
-```
-
-更新：
-
-```bash
 git -C "$HOME/.agents/skills/spec-to-delivery" pull --ff-only
 ```
 
-</details>
-
-Claude Code 使用：
-
-```bash
-mkdir -p "$HOME/.claude/skills"
-git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
-  "$HOME/.claude/skills/spec-to-delivery"
-```
-
-<details>
-<summary>Windows PowerShell 个人安装</summary>
-
-```powershell
-$skillsDir = Join-Path $HOME ".agents\skills"
-New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
-git clone https://github.com/AlexGitHub0909/SpecToDelivery.git `
-  (Join-Path $skillsDir "spec-to-delivery")
-```
-
-更新：
-
-```powershell
-git -C (Join-Path $HOME ".agents\skills\spec-to-delivery") pull --ff-only
-```
-
-</details>
-
-<details>
-<summary>项目共享安装</summary>
-
-把 Skill 作为 Submodule 放进项目仓库：
-
-```bash
-git submodule add https://github.com/AlexGitHub0909/SpecToDelivery.git \
-  .agents/skills/spec-to-delivery
-git commit -m "chore: add project delivery skill"
-```
-
-协作者克隆项目后运行：
-
-```bash
-git submodule update --init --recursive
-```
-
-也可以直接复制 Skill 内容，但不要保留嵌套的 `.git` 目录。
-
-如果项目只使用 Claude Code，可以把目标目录改为 `.claude/skills/spec-to-delivery`；Cursor 专用项目也可以使用 `.cursor/skills/spec-to-delivery`。跨多个工具协作时优先使用 `.agents/skills/spec-to-delivery`。
+Claude Code 用户将目标目录改为 `~/.claude/skills/spec-to-delivery`。团队也可以使用 Git Submodule，但这不是使用本 Skill 的前提。
 
 </details>
 

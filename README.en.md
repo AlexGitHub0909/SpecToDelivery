@@ -23,15 +23,11 @@ It is not tied to one agent and does not prescribe a programming language, frame
 
 ## Quick start
 
-Most tools that support open Agent Skills can load the repository from `.agents/skills`:
+1. [Download the latest ZIP](https://github.com/AlexGitHub0909/SpecToDelivery/archive/refs/heads/main.zip).
+2. Extract it and rename `SpecToDelivery-main` to `spec-to-delivery`.
+3. Move the folder into a supported Skill directory. Most tools use `~/.agents/skills/spec-to-delivery`; Claude Code uses `~/.claude/skills/spec-to-delivery`.
 
-```bash
-mkdir -p "$HOME/.agents/skills"
-git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
-  "$HOME/.agents/skills/spec-to-delivery"
-```
-
-Claude Code uses `~/.claude/skills`. See [Compatibility](#compatibility) and [Installation and updates](#installation-and-updates) for other entry points. After installation, give the active agent a PRD, requirements document, or target repository:
+See [Compatibility](#compatibility) and [Installation and updates](#installation-and-updates) for other entry points. After installation, give the active agent a PRD, requirements document, or target repository:
 
 ```text
 Use spec-to-delivery to audit the current material, establish or recover PLAN.md, the root AGENTS.md,
@@ -137,71 +133,33 @@ The Skill can be loaded through the paths above. Available shell, browser, netwo
 
 Use a Skill directory officially supported by the active platform. Codex, GitHub Copilot, Cursor, Gemini CLI, OpenCode, and TRAE IDE 3.5.44+ can use `.agents/skills`, making it the preferred shared location across tools. Claude Code uses `.claude/skills`. Do not install the same skill name in several discovered locations.
 
+### Direct download (recommended)
+
+[Download the latest ZIP](https://github.com/AlexGitHub0909/SpecToDelivery/archive/refs/heads/main.zip), extract it, rename the folder to `spec-to-delivery`, and move it to the appropriate location:
+
+| Use | Target directory |
+|---|---|
+| Personal installation for several tools | `~/.agents/skills/spec-to-delivery` |
+| Personal Claude Code installation | `~/.claude/skills/spec-to-delivery` |
+| Shared inside a project | `<project-root>/.agents/skills/spec-to-delivery` |
+
+A Claude Code-only project may use `.claude/skills/spec-to-delivery`; a Cursor-only project may use `.cursor/skills/spec-to-delivery`. To update, download the ZIP again and replace the old folder. Preserve any local changes before replacing it.
+
 Codex users may also ask `$skill-installer` to install the repository root from `https://github.com/AlexGitHub0909/SpecToDelivery` with the Skill name `spec-to-delivery`.
 
 <details>
-<summary>Personal installation on macOS or Linux</summary>
+<summary>Install and update with Git</summary>
+
+Git is useful when you update often or contribute to the repository:
 
 ```bash
 mkdir -p "$HOME/.agents/skills"
 git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
   "$HOME/.agents/skills/spec-to-delivery"
-```
-
-Update:
-
-```bash
 git -C "$HOME/.agents/skills/spec-to-delivery" pull --ff-only
 ```
 
-</details>
-
-For Claude Code:
-
-```bash
-mkdir -p "$HOME/.claude/skills"
-git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
-  "$HOME/.claude/skills/spec-to-delivery"
-```
-
-<details>
-<summary>Personal installation on Windows PowerShell</summary>
-
-```powershell
-$skillsDir = Join-Path $HOME ".agents\skills"
-New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
-git clone https://github.com/AlexGitHub0909/SpecToDelivery.git `
-  (Join-Path $skillsDir "spec-to-delivery")
-```
-
-Update:
-
-```powershell
-git -C (Join-Path $HOME ".agents\skills\spec-to-delivery") pull --ff-only
-```
-
-</details>
-
-<details>
-<summary>Project-shared installation</summary>
-
-Add the skill to a project as a Git submodule:
-
-```bash
-git submodule add https://github.com/AlexGitHub0909/SpecToDelivery.git \
-  .agents/skills/spec-to-delivery
-git commit -m "chore: add project delivery skill"
-```
-
-After cloning the project, collaborators run:
-
-```bash
-git submodule update --init --recursive
-```
-
-You may copy the skill instead, but do not keep a nested `.git` directory.
-
-For a Claude Code-only project, change the target to `.claude/skills/spec-to-delivery`. A Cursor-only project may use `.cursor/skills/spec-to-delivery`. Prefer `.agents/skills/spec-to-delivery` when several tools share the repository.
+Claude Code users can change the target to `~/.claude/skills/spec-to-delivery`. Teams may also use a Git submodule, but Git is not required to use the Skill.
 
 </details>
 
