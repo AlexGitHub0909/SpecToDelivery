@@ -1,6 +1,6 @@
 ---
 name: spec-to-delivery
-description: Turn a product brief, PRD, requirements document, or partial software repository into a planned, traceable project with current verification evidence. Use when Codex must establish a new software project, recover and continue an existing repository, produce a spec-only handoff, establish PLAN.md and root/scoped AGENTS.md rules, select only the website, frontend, backend, API, database, or operations rules that apply, implement end-to-end slices, reconcile code with approved intent, or prepare evidence-backed release and rollback work.
+description: Turn a product brief, PRD, requirements document, or partial software repository into a planned, traceable project with current verification evidence. Use when an AI coding agent must establish a new software project, recover and continue an existing repository, produce a spec-only handoff, establish PLAN.md and root/scoped AGENTS.md rules, select only the website, frontend, backend, API, database, or operations rules that apply, implement end-to-end slices, reconcile code with approved intent, or prepare evidence-backed release and rollback work.
 ---
 
 # SpecToDelivery
@@ -71,6 +71,18 @@ Describe the needed outcome before choosing a tool. Prefer approved repository c
 
 Record a capability decision in `PLAN.md` only when it affects delivery, permissions, external writes, acceptance evidence, or the fallback path. Do not install, enable, authorize, or write through an external capability without clear user authority. If a required capability is unavailable, use a safe fallback or mark the dependency `BLOCKED_EXTERNAL` instead of pretending the evidence exists.
 
+## Adapt to the active agent runtime
+
+Treat file access, shell execution, Python, web or browser access, plugins, MCP, subagents, and external-system access as runtime capabilities, not assumptions.
+
+- Do not lower the requested outcome, acceptance criteria, safety boundary, or evidence standard because the active platform lacks a feature. Use an equivalent path or record the task as manual or blocked.
+- Resolve bundled references, templates, and scripts relative to this `SKILL.md`; do not assume the target project contains this Skill's `scripts/` directory.
+- Read root and scoped `AGENTS.md` files explicitly when the active platform does not load them automatically.
+- Use subagents or parallel work only when the platform provides them and the task benefits. Otherwise perform the same checks sequentially.
+- If shell or Python is unavailable, create or review the governance files directly and mark the helper-script audit `MANUAL_REQUIRED`.
+- If browser, network, plugin, MCP, deployment, or external-system access is unavailable, use the strongest local substitute and narrow the readiness claim to the evidence actually obtained.
+- Treat platform-specific metadata and invocation syntax as optional adapters. They must not change the core workflow or become project requirements.
+
 ## Restore context
 
 Inspect, in this order:
@@ -94,14 +106,14 @@ Every managed project must have:
 - `AGENTS.md`
 - `PLAN.md`
 
-Add `CHANGELOG.md` when the project needs a durable capability history. Add `docs/README.md`, `docs/CODEX_DOC_ROUTER.md`, and `docs/DOCS_DICTIONARY.md` when documentation spans several files, audiences, or work areas. Keep the responsibilities covered when a small project combines them.
+Add `CHANGELOG.md` when the project needs a durable capability history. Add `docs/README.md`, `docs/DOC_ROUTER.md`, and `docs/DOCS_DICTIONARY.md` when documentation spans several files, audiences, or work areas. Accept an existing equivalent router instead of creating a duplicate. Keep the responsibilities covered when a small project combines them.
 
 Use the templates in `assets/templates/project/` only for missing files. Adapt their wording and documentation language to the project.
 
 Use the initializer for `GREENFIELD`, or when a `BROWNFIELD` repository has explicitly chosen this standard layout:
 
 ```bash
-python3 scripts/init_project.py /path/to/project \
+python3 /path/to/spec-to-delivery/scripts/init_project.py /path/to/project \
   --name "Project name" \
   --mode greenfield
 ```
@@ -152,13 +164,13 @@ Do not skip levels based on confidence. A build or test result cannot prove depl
 Run the standard-layout audit while establishing the project. Warnings identify starter content that still needs a project-specific decision or command:
 
 ```bash
-python3 scripts/audit_project.py /path/to/project
+python3 /path/to/spec-to-delivery/scripts/audit_project.py /path/to/project
 ```
 
 Before handoff, run it in strict mode. Do not hand off while it reports an empty work-area route, untouched starter text, or another error:
 
 ```bash
-python3 scripts/audit_project.py /path/to/project --strict
+python3 /path/to/spec-to-delivery/scripts/audit_project.py /path/to/project --strict
 ```
 
 This audit catches structural gaps and obvious unfinished starter content; a clean result does not prove that the decisions are correct or the software works. Then run the project's own checks from its `AGENTS.md`, test standards, and release runbook. Read the output. Report commands that were not run, partial coverage, manual evidence, and external blockers.

@@ -25,7 +25,7 @@ Link to `docs/operations/testing-and-acceptance.md` and list the shortest checks
 
 ## Documentation
 
-Start with `docs/README.md`. Codex task routing lives in `docs/CODEX_DOC_ROUTER.md`.
+Start with `docs/README.md`. Task-to-document routing lives in `docs/DOC_ROUTER.md`.
 
 ## Release
 

@@ -15,7 +15,7 @@ REQUIRED_FILES = (
     "PLAN.md",
     "CHANGELOG.md",
     "docs/README.md",
-    "docs/CODEX_DOC_ROUTER.md",
+    "docs/DOC_ROUTER.md",
     "docs/DOCS_DICTIONARY.md",
     "docs/specs/product-spec.md",
     "docs/specs/behavior-and-flow-spec.md",
@@ -26,6 +26,9 @@ REQUIRED_FILES = (
 )
 
 LEGACY_EQUIVALENTS = {
+    "docs/DOC_ROUTER.md": (
+        "docs/CODEX_DOC_ROUTER.md",
+    ),
     "docs/specs/behavior-and-flow-spec.md": (
         "docs/specs/business-flow-spec.md",
     ),

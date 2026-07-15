@@ -47,6 +47,24 @@ Omit routine editor, shell, search, and repository commands unless they carry un
 - Do not silently install a Skill or plugin, create an account, accept a license, enable a connector, or grant access.
 - Do not let a tool's defaults override repository rules, approved product behavior, privacy constraints, or user instructions.
 
+## Adapt to the runtime
+
+Inspect the active agent and environment before relying on a capability. Do not infer support from the product name alone; versions, permissions, sandboxes, and organization policy can change what is available.
+
+Runtime adaptation changes the execution path, not the requested result or acceptance standard. Use an equivalent method when one exists. If required evidence cannot be produced, keep the task manual or blocked instead of accepting a weaker result.
+
+| Capability | Preferred path | Fallback when unavailable |
+|---|---|---|
+| Repository read and write | Work directly in the approved project scope | Produce a patch or specification and mark application `MANUAL_REQUIRED` |
+| Shell and project commands | Run the repository's documented checks | Provide exact commands for an authorized operator and leave results unverified |
+| Python 3 | Run this Skill's standard-library helpers by their resolved installation path | Create or audit the same files directly; do not claim the helper audit ran |
+| Browser or network | Verify the relevant current page, documentation, or flow | Use local tests or artifacts and mark live behavior `MANUAL_REQUIRED` or `BLOCKED_EXTERNAL` |
+| Skills, plugins, MCP, or connectors | Load only the capability needed for the confirmed outcome | Use repository-native tools or a documented manual path |
+| Subagents or parallel workers | Delegate independent, bounded work when useful | Perform the same work sequentially in the current agent |
+| External write or deployment | Act only with explicit authority and fresh preflight evidence | Prepare the change or runbook without performing the external action |
+
+Platform-specific metadata, slash commands, plan modes, and custom-agent formats are adapters. Keep the reusable workflow in `SKILL.md`, references, templates, and scripts so their absence does not disable the Skill.
+
 ## Use a fallback deliberately
 
 An optional capability must not block the project. Use an existing repository command, a simpler local method, or a clearly marked manual check.

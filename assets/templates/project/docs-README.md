@@ -5,7 +5,7 @@ This directory contains the current product, engineering, test, and release cont
 ## Start here
 
 1. Read the product spec.
-2. Use `CODEX_DOC_ROUTER.md` to find documents for the task.
+2. Use `DOC_ROUTER.md` to find documents for the task.
 3. Check `../PLAN.md` for the active slice and current evidence.
 4. Read the nearest `AGENTS.md` before changing code or documents.
 

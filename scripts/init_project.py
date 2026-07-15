@@ -18,7 +18,7 @@ CORE_FILES = {
     "PLAN.md": "PLAN.md",
     "CHANGELOG.md": "CHANGELOG.md",
     "docs/README.md": "docs-README.md",
-    "docs/CODEX_DOC_ROUTER.md": "CODEX_DOC_ROUTER.md",
+    "docs/DOC_ROUTER.md": "DOC_ROUTER.md",
     "docs/DOCS_DICTIONARY.md": "DOCS_DICTIONARY.md",
     "docs/specs/product-spec.md": "product-spec.md",
     "docs/specs/behavior-and-flow-spec.md": "behavior-and-flow-spec.md",

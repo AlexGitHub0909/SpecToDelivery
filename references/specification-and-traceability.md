@@ -89,4 +89,4 @@ Update the canonical contract first. Do not patch only the summary or the UI cop
 
 ## Scale the package
 
-For a small project, combine related contracts while keeping clear headings and ownership. Split documents when they have different audiences, update triggers, or evidence sources. Maintain `docs/README.md`, `docs/CODEX_DOC_ROUTER.md`, and `docs/DOCS_DICTIONARY.md` once the project has more than a handful of documents or multiple work areas.
+For a small project, combine related contracts while keeping clear headings and ownership. Split documents when they have different audiences, update triggers, or evidence sources. Maintain `docs/README.md`, `docs/DOC_ROUTER.md`, and `docs/DOCS_DICTIONARY.md` once the project has more than a handful of documents or multiple work areas. Reuse an existing equivalent router instead of creating a parallel file.

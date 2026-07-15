@@ -1,4 +1,4 @@
-# Codex document router
+# Project document router
 
 Read `../AGENTS.md`, `../PLAN.md`, and the nearest scoped `AGENTS.md` for every task. Then use this table.
 

@@ -12,6 +12,8 @@ import unittest
 REPO_ROOT = Path(__file__).resolve().parents[1]
 INIT_SCRIPT = REPO_ROOT / "scripts" / "init_project.py"
 AUDIT_SCRIPT = REPO_ROOT / "scripts" / "audit_project.py"
+SKILL_FILE = REPO_ROOT / "SKILL.md"
+README_FILES = (REPO_ROOT / "README.md", REPO_ROOT / "README.en.md")
 
 
 def load_audit_module():
@@ -99,6 +101,42 @@ class ProjectScriptTests(unittest.TestCase):
 
         self.assertIn("## Capability decisions", plan)
         self.assertIn("## Capability and tool routing", agents)
+
+    def test_initializer_uses_platform_neutral_document_router(self) -> None:
+        self.assertTrue((self.project / "docs/DOC_ROUTER.md").is_file())
+        self.assertFalse((self.project / "docs/CODEX_DOC_ROUTER.md").exists())
+        docs_readme = (self.project / "docs/README.md").read_text(encoding="utf-8")
+        self.assertIn("`DOC_ROUTER.md`", docs_readme)
+
+    def test_audit_accepts_legacy_codex_router(self) -> None:
+        current = self.project / "docs/DOC_ROUTER.md"
+        legacy = self.project / "docs/CODEX_DOC_ROUTER.md"
+        current.rename(legacy)
+
+        result = self.run_audit()
+
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn("legacy path accepted: docs/CODEX_DOC_ROUTER.md", result.stdout)
+
+    def test_skill_trigger_is_platform_neutral(self) -> None:
+        content = SKILL_FILE.read_text(encoding="utf-8")
+        self.assertIn("Use when an AI coding agent must", content)
+        self.assertNotIn("Use when Codex must", content)
+
+    def test_readmes_cover_supported_agent_platforms(self) -> None:
+        platforms = (
+            "Codex",
+            "Claude Code",
+            "GitHub Copilot",
+            "Cursor",
+            "Gemini CLI",
+            "OpenCode",
+            "TRAE",
+        )
+        for readme in README_FILES:
+            content = readme.read_text(encoding="utf-8")
+            for platform in platforms:
+                self.assertIn(platform, content, f"{platform} missing from {readme.name}")
 
     def test_initializer_includes_lean_project_controls(self) -> None:
         plan = (self.project / "PLAN.md").read_text(encoding="utf-8")

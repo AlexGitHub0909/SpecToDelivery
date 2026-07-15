@@ -16,7 +16,7 @@ Before changing the project, read:
 - every scoped `AGENTS.md` on the path to the target file;
 - `PLAN.md`;
 - `README.md` and `docs/README.md`;
-- `docs/CODEX_DOC_ROUTER.md`;
+- `docs/DOC_ROUTER.md` or the project's equivalent document router;
 - the contracts routed for the task;
 - current code, tests, Git state, and runtime examples.
 

@@ -2,8 +2,8 @@
 
 | Document | Audience | Responsibility | Update when | Does not prove |
 |---|---|---|---|---|
-| `README.md` | Contributors and Codex | Documentation entry and fact boundaries | Document structure changes | Implementation status |
-| `CODEX_DOC_ROUTER.md` | Codex and contributors | Maps task types to required documents | Task routing or document responsibility changes | Task completion |
+| `README.md` | Contributors and delivery agents | Documentation entry and fact boundaries | Document structure changes | Implementation status |
+| `DOC_ROUTER.md` | Delivery agents and contributors | Maps task types to required documents | Task routing or document responsibility changes | Task completion |
 | `specs/product-spec.md` | Project owners and engineering | Approved actors, scope, capabilities, and boundaries | Intended behavior changes | That code is implemented |
 | `specs/behavior-and-flow-spec.md` | Product, engineering, QA | Observable behavior, system flows, decisions, failures, and outcomes | Flow or state behavior changes | Current runtime behavior |
 | `specs/traceability-matrix.md` | Product, engineering, QA | Requirement-to-implementation-and-evidence map | Requirements, code, tests, or evidence change | Release approval by itself |

@@ -8,7 +8,8 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-2f855a.svg?style=flat-square"></a>
-  <img alt="Codex Skill" src="https://img.shields.io/badge/Codex-Skill-2563eb.svg?style=flat-square">
+  <img alt="Open Agent Skill" src="https://img.shields.io/badge/Agent-Skill-2563eb.svg?style=flat-square">
+  <img alt="Compatible agents: 7" src="https://img.shields.io/badge/compatible_agents-7-0f766e.svg?style=flat-square">
   <img alt="Workflow: PLAN and AGENTS" src="https://img.shields.io/badge/workflow-PLAN%20%2B%20AGENTS-7c3aed.svg?style=flat-square">
   <img alt="Helper scripts: Python standard library only" src="https://img.shields.io/badge/helpers-Python%20stdlib-3776ab.svg?style=flat-square&amp;logo=python&amp;logoColor=white">
 </p>
@@ -17,28 +18,29 @@
   <a href="README.md">🇨🇳 中文</a> · <a href="README.en.md">🇺🇸 English</a>
 </p>
 
-SpecToDelivery is a single Codex Skill for software project delivery. It can establish a project from product material, recover the current state of an existing repository before implementation continues, or produce an implementation-ready specification without changing code.
+SpecToDelivery is a software project delivery Skill built on the open [Agent Skills specification](https://agentskills.io/specification). It can establish a project from product material, recover the current state of an existing repository before implementation continues, or produce an implementation-ready specification without changing code.
 
-It does not prescribe a programming language, framework, database, or deployment platform. It keeps existing technical choices when they are settled. When they are open, it recommends one preferred approach from the product and delivery constraints. The user still confirms decisions that are expensive to reverse unless they explicitly delegate that authority to Codex.
+It is not tied to one agent and does not prescribe a programming language, framework, database, or deployment platform. It keeps existing technical choices when they are settled. When they are open, it recommends one preferred approach from the product and delivery constraints. The user still confirms decisions that are expensive to reverse unless they explicitly delegate that authority to the active agent.
 
 ## Quick start
 
-Install from Codex:
+Most tools that support open Agent Skills can load the repository from `.agents/skills`:
 
-```text
-Use $skill-installer to install the skill at the repository root of
-https://github.com/AlexGitHub0909/SpecToDelivery and name it spec-to-delivery.
+```bash
+mkdir -p "$HOME/.agents/skills"
+git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
+  "$HOME/.agents/skills/spec-to-delivery"
 ```
 
-Then give Codex a PRD, requirements document, or target repository:
+Claude Code uses `~/.claude/skills`. See [Compatibility](#compatibility) and [Installation and updates](#installation-and-updates) for other entry points. After installation, give the active agent a PRD, requirements document, or target repository:
 
 ```text
-Use $spec-to-delivery to audit the current material, establish or recover PLAN.md, the root AGENTS.md,
+Use spec-to-delivery to audit the current material, establish or recover PLAN.md, the root AGENTS.md,
 and any necessary scoped AGENTS.md files,
 then implement the next piece of work with current verification evidence.
 ```
 
-You can also use the [manual installation](#installation-and-updates) instructions below.
+Codex accepts `$spec-to-delivery`. Platforms with a slash-command menu or Skill picker can invoke it there. The natural-language form does not depend on platform-specific syntax.
 
 ## When to use it
 
@@ -104,7 +106,7 @@ Read the capability's instructions before use and check permissions, cost, netwo
 Start from product material:
 
 ```text
-Use $spec-to-delivery to turn this PRD into a GREENFIELD project.
+Use spec-to-delivery to turn this PRD into a GREENFIELD project.
 Infer the applicable engineering work areas and ask only about unresolved choices that change scope or architecture.
 Then establish PLAN, scoped AGENTS, specifications, and traceability before completing the first working slice.
 ```
@@ -112,13 +114,33 @@ Then establish PLAN, scoped AGENTS, specifications, and traceability before comp
 Prepare a specification-only handoff:
 
 ```text
-Use $spec-to-delivery in SPEC_ONLY mode.
+Use spec-to-delivery in SPEC_ONLY mode.
 Produce product contracts, implementation slices, acceptance evidence, and release considerations without changing application code.
 ```
 
+## Compatibility
+
+This repository maintains one platform-neutral `SKILL.md` together with shared references, templates, and scripts. Platform-specific files remain optional adapters. For example, `agents/openai.yaml` supplies UI metadata for OpenAI products and can be ignored elsewhere.
+
+| Platform | Official discovery or import path | Current status |
+|---|---|---|
+| [Codex](https://learn.chatgpt.com/docs/build-skills) | `~/.agents/skills`, project `.agents/skills` | Primary development and validation environment |
+| [Claude Code](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) | `~/.claude/skills`, project `.claude/skills` | Standard and structure compatible; platform end-to-end validation pending |
+| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) | `~/.agents/skills`, `~/.copilot/skills`; project `.agents/skills`, `.github/skills`, or `.claude/skills` | Standard and structure compatible; platform end-to-end validation pending |
+| [Cursor](https://cursor.com/docs/skills) | `~/.agents/skills`, `~/.cursor/skills`; project `.agents/skills` or `.cursor/skills` | Standard and structure compatible; platform end-to-end validation pending |
+| [Gemini CLI](https://geminicli.com/docs/cli/using-agent-skills/) | `~/.agents/skills`, `~/.gemini/skills`; project `.agents/skills` or `.gemini/skills` | Standard and structure compatible; platform end-to-end validation pending |
+| [OpenCode](https://opencode.ai/docs/skills) | `~/.agents/skills`, `~/.config/opencode/skills`; project `.agents/skills`, `.opencode/skills`, or `.claude/skills` | Standard and structure compatible; platform end-to-end validation pending |
+| [TRAE](https://www.trae.ai/blog/trae_tutorial_0115) | [TRAE IDE 3.5.44+](https://www.trae.ai/ja/changelog) can use project `.agents/skills`; UI import is also available under Settings → Rule & Skills → Skills | Standard and structure compatible; platform end-to-end validation pending |
+
+Here, “compatible” means the platform officially supports `SKILL.md` and the repository does not bind its core workflow to a proprietary agent feature. It does not mean every version, permission set, and runtime behaves identically. A platform is only marked end-to-end validated after installation discovery, triggering, reference loading, script execution, `PLAN.md` updates, root and scoped `AGENTS.md` loading, and a complete handoff flow have all been exercised there.
+
+When platform capabilities differ, the Skill adapts the execution path without lowering the requested outcome, acceptance criteria, safety boundary, or evidence standard. It works sequentially without subagents and manages governance files directly when Python 3 is unavailable. Without browser, network, MCP, or external access, it proceeds only when another method can produce equivalent evidence; otherwise the item remains `MANUAL_REQUIRED` or `BLOCKED_EXTERNAL`. Missing tools never justify replacing evidence with a written claim.
+
 ## Installation and updates
 
-The [Codex Skills documentation](https://learn.chatgpt.com/docs/build-skills) uses `$HOME/.agents/skills` for personal skills and `.agents/skills` inside a repository for shared skills. If your Codex installation already discovers this skill from another supported location, do not install a duplicate.
+Use a Skill directory officially supported by the active platform. Codex, GitHub Copilot, Cursor, Gemini CLI, OpenCode, and TRAE IDE 3.5.44+ can use `.agents/skills`, making it the preferred shared location across tools. Claude Code uses `.claude/skills`. Do not install the same skill name in several discovered locations.
+
+Codex users may also ask `$skill-installer` to install the repository root from `https://github.com/AlexGitHub0909/SpecToDelivery` with the Skill name `spec-to-delivery`.
 
 <details>
 <summary>Personal installation on macOS or Linux</summary>
@@ -136,6 +158,14 @@ git -C "$HOME/.agents/skills/spec-to-delivery" pull --ff-only
 ```
 
 </details>
+
+For Claude Code:
+
+```bash
+mkdir -p "$HOME/.claude/skills"
+git clone https://github.com/AlexGitHub0909/SpecToDelivery.git \
+  "$HOME/.claude/skills/spec-to-delivery"
+```
 
 <details>
 <summary>Personal installation on Windows PowerShell</summary>
@@ -174,13 +204,15 @@ git submodule update --init --recursive
 
 You may copy the skill instead, but do not keep a nested `.git` directory.
 
+For a Claude Code-only project, change the target to `.claude/skills/spec-to-delivery`. A Cursor-only project may use `.cursor/skills/spec-to-delivery`. Prefer `.agents/skills/spec-to-delivery` when several tools share the repository.
+
 </details>
 
-For personal or repository use, this skill has no required MCP server or plugin. A project may still use capabilities that have already been approved for that environment. Restart Codex if the skill does not appear after installation.
+For personal or repository use, this skill has no required MCP server or plugin. A project may still use capabilities that have already been approved for that environment. If the active session does not discover the Skill, refresh the Skill list or start a new agent session, then check the directory, filename, YAML frontmatter, and platform permissions.
 
 ## Initialization and audit scripts
 
-The helper scripts use only the Python standard library. They do not constrain the application project's language or stack.
+The helper scripts use only the Python 3 standard library. They do not constrain the application project's language or stack. The commands below assume the current directory is this Skill's installation directory. When an agent invokes them from a target project, it should resolve the directory containing `SKILL.md` and use the script's full path.
 
 Preview the files that would be created:
 
@@ -217,10 +249,10 @@ Product documents do not prove that code exists, and local tests do not prove th
 
 ```text
 spec-to-delivery/
-├── SKILL.md                 # Codex execution rules
+├── SKILL.md                 # Platform-neutral core execution rules
 ├── README.md                # Chinese, shown by default on GitHub
 ├── README.en.md             # English
-├── agents/openai.yaml       # Skill list metadata
+├── agents/openai.yaml       # Optional UI metadata for OpenAI products
 ├── references/              # Core rules, capability routing, and on-demand work-area rules
 ├── assets/templates/project # Project governance templates
 ├── scripts/                 # Initialization and audit helpers
